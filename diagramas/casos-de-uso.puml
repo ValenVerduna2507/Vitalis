@@ -1,26 +1,97 @@
-@startuml
-title Diagrama de Casos de Uso - [Nombre del Sistema]
+@startuml casos-de-uso-vitalis
+' ============================================================
+'  Diagrama de Casos de Uso
+'  Sistema de Gestion Integral - Vitalis Centro de Entrenamiento
+'  Escuela Superior de Comercio N 49 "Justo Jose de Urquiza"
+'  Grupo 02 - Desarrollo Web / Analista Funcional de Sistemas
+'
+'  Documentacion asociada: docs/casos-de-uso.md
+'  Visualizar en: https://www.plantuml.com/plantuml/uml/
+' ============================================================
 
 left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam nodesep 12
+skinparam ranksep 45
 
-' --- Actores ---
-actor "[Actor principal]" as A1
-actor "[Actor secundario]" as A2
-
-' --- Sistema ---
-rectangle "[Nombre del Sistema]" {
-  usecase "[Caso de uso 1]" as UC1
-  usecase "[Caso de uso 2]" as UC2
-  usecase "[Caso de uso 3]" as UC3
+skinparam actor {
+  BackgroundColor White
+  BorderColor #1F3864
+}
+skinparam usecase {
+  BackgroundColor #F2F5FA
+  BorderColor #1F3864
+  ArrowColor #1F3864
+}
+skinparam rectangle {
+  BorderColor #1F3864
+}
+skinparam note {
+  BackgroundColor #FFFDE7
+  BorderColor #BDBDBD
 }
 
-' --- Relaciones actor-caso de uso ---
-A1 --> UC1
-A1 --> UC2
-A2 --> UC3
+title Diagrama de Casos de Uso\nSistema de Gestion Integral - Vitalis Centro de Entrenamiento
 
-' --- Relaciones entre casos de uso ---
-' UC2 .> UC1 : <<include>>
-' UC3 .> UC1 : <<extend>>
+' ------------------------------------------------------------
+'  ACTORES
+' ------------------------------------------------------------
+actor "Administrador\n(Propietaria / Directora)" as ADM
+actor "Recepcionista" as REC
+actor "Instructor" as INS
+actor "Nutricionista" as NUT
+actor "Alumno" as ALU
+actor "Sistema de auditoria" as AUD
+
+' ------------------------------------------------------------
+'  LIMITE DEL SISTEMA
+' ------------------------------------------------------------
+rectangle "Sistema de Gestion Integral - Vitalis" {
+
+  package "M7 - Seguridad, usuarios y roles" {
+    usecase "CU-00\nAutenticar usuario" as CU00
+    usecase "CU-16\nGestionar usuarios y roles" as CU16
+  }
+
+  package "M1 - Gestion de alumnos" {
+    usecase "CU-01\nRegistrar alumno" as CU01
+    usecase "CU-04\nModificar datos de alumno" as CU04
+    usecase "CU-05\nDar de baja alumno" as CU05
+    usecase "CU-06\nReactivar alumno" as CU06
+  }
+
+  package "M2 - Gestion de cuotas y pagos" {
+    usecase "CU-02\nRegistrar pago de cuota" as CU02
+    usecase "CU-03\nConsultar alumnos morosos" as CU03
+    usecase "CU-07\nGestionar modalidades de cobro" as CU07
+    usecase "Exportar reporte a PDF" as EXP
+  }
+
+  package "M3 - Planificacion de actividades" {
+    usecase "CU-08\nGestionar disciplinas" as CU08
+    usecase "CU-09\nCrear clase y asignar instructor" as CU09
+    usecase "CU-10\nGestionar versiones de grilla" as CU10
+    usecase "CU-11\nInscribir alumno a clase" as CU11
+  }
+
+  package "M4 - Control de asistencia" {
+    usecase "CU-12\nRegistrar asistencia" as CU12
+    usecase "Registrar asistente ocasional" as OCA
+  }
+
+  package "M5 - Seguimiento nutricional" {
+    usecase "CU-13\nRegistrar consulta nutricional" as CU13
+    usecase "CU-14\nConsultar evolucion del paciente" as CU14
+  }
+
+  package "M6 - Gestion de instructores" {
+    usecase "CU-15\nGestionar instructores" as CU15
+  }
+
+  package "Consultas del alumno" {
+    usecase "Consultar informacion propia" as CONS
+  }
+}
 
 @enduml
