@@ -94,4 +94,93 @@ rectangle "Sistema de Gestion Integral - Vitalis" {
   }
 }
 
+' ------------------------------------------------------------
+'  ASOCIACIONES: ACTOR - CASO DE USO
+' ------------------------------------------------------------
+
+' Todos los actores se autentican
+ADM --> CU00
+REC --> CU00
+INS --> CU00
+NUT --> CU00
+ALU --> CU00
+ALU --> CONS
+
+' Administrador (Propietaria / Directora)
+ADM --> CU03
+ADM --> CU07
+ADM --> CU08
+ADM --> CU09
+ADM --> CU10
+ADM --> CU15
+ADM --> CU16
+
+' Recepcionista
+REC --> CU01
+REC --> CU02
+REC --> CU04
+REC --> CU05
+REC --> CU06
+REC --> CU11
+
+' Instructor
+INS --> CU12
+
+' Nutricionista
+NUT --> CU13
+NUT --> CU14
+
+' Sistema de auditoria (actor secundario)
+CU01 --> AUD
+CU02 --> AUD
+
+' ------------------------------------------------------------
+'  RELACIONES <<include>>
+'  El caso base SIEMPRE ejecuta el caso incluido.
+'  La flecha va del caso base hacia el caso incluido.
+' ------------------------------------------------------------
+CU01 ..> CU00 : <<include>>
+CU02 ..> CU00 : <<include>>
+CU09 ..> CU00 : <<include>>
+CU12 ..> CU00 : <<include>>
+CU13 ..> CU00 : <<include>>
+
+' ------------------------------------------------------------
+'  RELACIONES <<extend>>
+'  El caso extension se ejecuta SOLO bajo cierta condicion,
+'  en un punto de extension del caso base.
+'  La flecha va del caso extension hacia el caso base.
+' ------------------------------------------------------------
+CU06 ..> CU01 : <<extend>>\n(el DNI corresponde\na un alumno de baja)
+EXP  ..> CU03 : <<extend>>\n(el usuario decide\nexportar el listado)
+OCA  ..> CU12 : <<extend>>\n(se presenta un alumno\nno inscripto)
+
+' ------------------------------------------------------------
+'  NOTAS
+' ------------------------------------------------------------
+note right of CU00
+  Incluido por todos los casos de uso
+  del sistema. Por legibilidad, la
+  relacion se dibuja solo sobre un
+  caso representativo de cada modulo.
+end note
+
+legend right
+  |= Relacion |= Significado |
+  | Linea continua | Asociacion actor - caso de uso |
+  | <<include>> | El caso base siempre ejecuta el incluido |
+  | <<extend>> | El caso extension se ejecuta solo bajo condicion |
+  Actores primarios: Administrador, Recepcionista,
+  Instructor, Nutricionista, Alumno.
+  Actor secundario: Sistema de auditoria (RNF05).
+
+  CU-13 y CU-14: acceso exclusivo del rol
+  Nutricionista al contenido clinico (RF21 / RN29).
+
+  No existe <<extend>> entre CU-02 y CU-01: que el
+  alumno este registrado es una PRECONDICION.
+  Ver docs/casos-de-uso.md, seccion 3.4.
+endlegend
+
 @enduml
+
