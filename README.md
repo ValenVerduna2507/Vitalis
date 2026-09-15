@@ -214,6 +214,9 @@ El cálculo de la morosidad y la generación de los reportes se resuelven en el 
 │   └── stakeholders.md              # Análisis y matriz de stakeholders
 │
 ├── diagramas/
+│   ├── arquitectura-general.dot     # Diagrama general de arquitectura (Graphviz)
+│   ├── arquitectura-general.png     # Imagen generada del diagrama general
+│   ├── arquitectura-general.svg     # Versión vectorial del diagrama general
 │   ├── casos-de-uso.puml            # Diagrama UML de casos de uso (PlantUML)
 │   ├── er.puml                      # Modelo entidad-relación (PlantUML)
 │   └── wireframes/                  # Bocetos de las pantallas principales
@@ -242,19 +245,51 @@ El cálculo de la morosidad y la generación de los reportes se resuelven en el 
 
 ## 10. Diagramas
 
-Los diagramas se escriben en **PlantUML** y se versionan como código fuente dentro de `diagramas/`. Para visualizarlos:
-
-1. Abrir el archivo `.puml`.
-2. Copiar su contenido.
-3. Pegarlo en el servidor oficial: <https://www.plantuml.com/plantuml/uml/>
-
-También pueden previsualizarse desde Visual Studio Code con la extensión **PlantUML** (`jebbs.plantuml`). En [`RECURSOS.md`](RECURSOS.md) está el paso a paso de instalación.
+Todos los diagramas se versionan como código fuente dentro de `diagramas/`, de modo que cualquier cambio quede registrado en el historial de Git y no dependa de un archivo binario.
 
 | Archivo | Diagrama | Contenido |
 |---|---|---|
+| [`diagramas/arquitectura-general.dot`](diagramas/arquitectura-general.dot) | Arquitectura general | Vista completa del sistema en una sola lámina: roles, puestos de acceso, capa de presentación, back-end, base de datos y automatización. |
 | [`diagramas/casos-de-uso.puml`](diagramas/casos-de-uso.puml) | Casos de uso (UML) | Actores del sistema, casos de uso por módulo y relaciones `include` / `extend`. |
 | [`diagramas/er.puml`](diagramas/er.puml) | Entidad-relación | Entidades, atributos, claves primarias y foráneas, y cardinalidades. |
 | [`diagramas/wireframes/`](diagramas/wireframes/) | Wireframes | Bocetos de baja fidelidad de las pantallas principales. |
+
+### 10.1 — Diagrama general de arquitectura
+
+Es la vista de conjunto del sistema. Integra en una sola lectura lo que el resto de la documentación desarrolla por separado: los cinco roles de `docs/requisitos.md`, las diecinueve pantallas de `docs/diseño-ui.md`, los ocho módulos con sus treinta y un requisitos funcionales, las dieciocho entidades de `docs/er-modelo.md` y la automatización prevista en la restricción RE11.
+
+![Diagrama general de arquitectura del Sistema de Gestión Integral de Vitalis](diagramas/arquitectura-general.png)
+
+Se lee de arriba hacia abajo, en seis capas:
+
+| Capa | Qué muestra |
+|---|---|
+| 1 · Usuarios y roles | Los cinco roles definidos en `docs/requisitos.md` 10.1, con el alcance de cada uno. |
+| 2 · Puestos de acceso | Desde qué equipo trabaja cada rol. La tablet del salón corresponde a la restricción RE05. |
+| 3 · Capa de presentación | Las diecinueve pantallas agrupadas por área funcional. |
+| 4 · Capa de aplicación | Los servicios transversales y los ocho módulos funcionales. Acá vive toda la lógica de negocio. |
+| 5 · Capa de datos | Las dieciocho entidades de PostgreSQL, agrupadas por el módulo que las usa. |
+| 6 · Automatización | n8n y los dos procesos programados previstos. No contiene lógica de negocio. |
+
+Dos aclaraciones que el diagrama deja explícitas, porque son las que suelen malinterpretarse:
+
+- **La interfaz no valida ni decide.** Las reglas RN01 a RN29 y el control de acceso por rol se resuelven en el back-end. La matriz de permisos de `docs/requisitos.md` 10.2 define qué puede hacer cada rol sobre cada funcionalidad.
+- **n8n no reemplaza al back-end.** Define *cuándo* se ejecuta un proceso y *a quién* se le entrega el resultado. Ningún requisito funcional depende de n8n para cumplirse.
+
+### 10.2 — Cómo visualizar y regenerar los diagramas
+
+**Diagramas en PlantUML** (`.puml`): abrir el archivo, copiar su contenido y pegarlo en el servidor oficial <https://www.plantuml.com/plantuml/uml/>. También pueden previsualizarse desde Visual Studio Code con la extensión **PlantUML** (`jebbs.plantuml`). En [`RECURSOS.md`](RECURSOS.md) está el paso a paso de instalación.
+
+**Diagrama en Graphviz** (`.dot`): el diagrama general usa Graphviz en lugar de PlantUML porque necesita control explícito del apilado por capas, que PlantUML no garantiza. Los diagramas UML del repositorio siguen en PlantUML. Para regenerar la imagen después de editar el `.dot`:
+
+```bash
+dot -Tpng -Gdpi=110 diagramas/arquitectura-general.dot -o diagramas/arquitectura-general.png
+dot -Tsvg              diagramas/arquitectura-general.dot -o diagramas/arquitectura-general.svg
+```
+
+Sin instalar nada, puede pegarse el contenido del `.dot` en <https://dreampuf.github.io/GraphvizOnline/>.
+
+> Si se modifica el `.dot`, hay que volver a generar el `.png` y el `.svg` en el mismo commit. La imagen del README se rompe visualmente si queda desactualizada respecto del fuente.
 
 ---
 
