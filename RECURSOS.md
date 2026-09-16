@@ -917,6 +917,8 @@ Como <rol>, quiero <funcionalidad>, para <beneficio>.
 | **GitHub Desktop** | Usar Git con interfaz gráfica, sin terminal. | <https://desktop.github.com> |
 | **PlantUML Web Server** | Ver diagramas sin instalar nada. | <https://www.plantuml.com/plantuml/uml/> |
 | **PlantText** | Editor online de PlantUML. | <https://www.planttext.com/> |
+| **Graphviz** | Generar el diagrama general de arquitectura a partir del archivo `.dot`. | <https://graphviz.org/download/> |
+| **Graphviz Online** | Ver y editar el `.dot` sin instalar nada. | <https://dreampuf.github.io/GraphvizOnline/> |
 | **Figma** | Wireframes y prototipos de interfaz. | <https://www.figma.com> |
 | **Balsamiq** | Wireframes de baja fidelidad. | <https://balsamiq.com> |
 | **Excalidraw** | Bocetos rápidos a mano alzada. | <https://excalidraw.com> |
