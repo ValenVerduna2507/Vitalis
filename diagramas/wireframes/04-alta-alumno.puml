@@ -1,0 +1,36 @@
+@startsalt 04-alta-alumno
+' ============================================================
+'  Wireframe P04 - Alta de alumno
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P04
+'  Historia HU-01 / Caso de uso CU-01 / RF01, RF02
+' ============================================================
+{
+  {+
+    { VITALIS | . | Julieta Ferreyra (Recepcionista) | [Cerrar sesion] }
+    --
+    Inicio > Alumnos > Nuevo alumno
+    ==
+    Datos personales
+    --
+    Apellido *          | "Benitez              "
+    Nombre *            | "Laura                "
+    DNI *               | "30145876             "
+    Fecha nacimiento *  | "12/07/1991           "
+    .
+    Contacto
+    --
+    Telefono            | "341 555 0198         "
+    Email               | "laura@ejemplo.com    "
+    .
+    Actividad y cobro
+    --
+    Actividades *       | [X] Pilates  [X] Funcional  [ ] Yoga  [ ] GAP
+    Modalidad de cobro *| ^Combinada - $38.000^
+    .
+    { Tutor responsable: se habilita solo si el alumno es menor de 18 anos }
+    --
+    .                   | [ Cancelar ] | [ Guardar ]
+  }
+}
+@endsalt

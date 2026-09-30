@@ -1,0 +1,28 @@
+@startsalt 06-registro-pago
+' ============================================================
+'  Wireframe P06 - Registro de pago
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P06
+'  Historia HU-02 / Caso de uso CU-02 / RF06, RF07, RNF08
+' ============================================================
+{
+  {+
+    { VITALIS | . | Julieta Ferreyra (Recepcionista) | [Cerrar sesion] }
+    --
+    Inicio > Alumnos > Ficha > Registrar pago
+    ==
+    { Benitez, Laura | Legajo 218 | Modalidad: Combinada | Estado: MOROSO 41 dias }
+    --
+    Monto *          | "38000        " | { monto sugerido segun modalidad }
+    Periodo *        | ^Julio^ | ^2026^
+    Fecha de pago *  | "18/07/2026   "
+    Medio de pago *  | (X) Efectivo   ( ) Transferencia
+    .
+    { Periodos adeudados: 06/2026, 07/2026 }
+    --
+    .                | [ Cancelar ] | [ Confirmar pago ]
+    ==
+    { RNF08: 4 pasos desde la busqueda hasta la confirmacion }
+  }
+}
+@endsalt

@@ -1,0 +1,61 @@
+@startsalt 05-ficha-alumno
+' ============================================================
+'  Wireframe P05 - Ficha del alumno
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P05
+'  Historias HU-06, HU-07, HU-08, HU-16
+' ============================================================
+{
+  {+
+    { VITALIS | . | Julieta Ferreyra (Recepcionista) | [Cerrar sesion] }
+    --
+    Inicio > Alumnos > Ficha
+    ==
+    { Benitez, Laura | Legajo 218 | DNI 30.145.876 | Activo | MOROSO - 41 dias - $56.000 }
+    --
+    [ Editar ] | [ Registrar pago ] | [ Inscribir a clase ] | [ Dar de baja ]
+    ==
+    {
+      {
+        Datos personales
+        --
+        Nacimiento | 12/07/1991
+        Telefono   | 341 555 0198
+        Email      | laura@ejemplo.com
+        Alta       | 04/03/2026
+        Modalidad  | Combinada $38.000
+      } |
+      {
+        Clases inscriptas
+        --
+        {#
+          Disciplina | Dia    | Horario | Instructor
+          Pilates    | Martes | 10:00   | Martinez, Sofia
+          Funcional  | Jueves | 19:00   | Lopez, Martin
+        }
+      }
+    }
+    ==
+    {
+      {
+        Ultimos pagos                     [ Ver historial ]
+        --
+        {#
+          Fecha      | Periodo | Monto
+          05/06/2026 | 06/2026 | $38.000
+          07/05/2026 | 05/2026 | $38.000
+        }
+      } |
+      {
+        Ultimas asistencias               [ Ver historial ]
+        --
+        {#
+          Fecha      | Clase     | Estado
+          17/07/2026 | Funcional | Presente
+          15/07/2026 | Pilates   | Ausente
+        }
+      }
+    }
+  }
+}
+@endsalt

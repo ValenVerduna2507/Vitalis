@@ -1,0 +1,31 @@
+@startsalt 09-control-asistencia
+' ============================================================
+'  Wireframe P13 - Control de asistencia (vista tablet)
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P13
+'  Historias HU-04, HU-17 / Caso de uso CU-12 / RF15, RF16, RF17, RF27
+' ============================================================
+{
+  {+
+    { VITALIS | Martin Lopez (Instructor) | [Salir] }
+    --
+    { Funcional - Lunes 19:00 - 18/07/2026 }
+    { Presentes: 9   Ausentes: 2   Justificados: 1 }
+    --
+    [ Marcar todos presentes ] | "Agregar alumno...        " | [ Buscar ]
+    ==
+    {#
+      Alumno              | .            | .           | .
+      Alvarez, Nicolas    | [ PRESENTE ] | [ AUSENTE ] | [ JUSTIFIC. ]
+      Benitez, Laura      | [ PRESENTE ] | [ AUSENTE ] | [ JUSTIFIC. ]
+      Cabrera, Julian     | [ PRESENTE ] | [ AUSENTE ] | [ JUSTIFIC. ]
+      Diaz, Marina        | [ PRESENTE ] | [ AUSENTE ] | [ JUSTIFIC. ]
+      Suarez, Pablo (OCA) | [ PRESENTE ] | [ AUSENTE ] | [ JUSTIFIC. ]
+    }
+    ==
+    .                     | [    CONFIRMAR ASISTENCIA    ]
+    .
+    { (OCA) = asistente ocasional, no inscripto en la clase (RF27) }
+  }
+}
+@endsalt
