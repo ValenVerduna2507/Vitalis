@@ -24,7 +24,7 @@ Repositorio de documentación de análisis funcional del **Sistema de Gestión I
 
 ## 1. ¿Qué es Vitalis?
 
-Vitalis es un centro de entrenamiento físico ubicado en **Pueblo Esther, provincia de Santa Fe**. Ofrece una amplia variedad de disciplinas en dos franjas horarias (turno mañana y turno tarde-noche) y complementa su propuesta con el servicio de una nutricionista.
+Vitalis es un centro de entrenamiento físico ubicado en **Pueblo Esther, provincia de Santa Fe** (decisión D2: la referencia a Rosario que aparece en este repositorio corresponde a la institución educativa, no al centro). Ofrece una amplia variedad de disciplinas en dos franjas horarias (turno mañana y turno tarde-noche) y complementa su propuesta con el servicio de una nutricionista.
 
 **Disciplinas relevadas:**
 
@@ -39,6 +39,8 @@ Vitalis es un centro de entrenamiento físico ubicado en **Pueblo Esther, provin
 | Pilates | Adultos | Mañana y tarde-noche |
 | Aeróbica Infantil | Niños | Tarde |
 | Kids Fit & Fun | Niños | Tarde |
+
+> Pilates se incorpora al listado por la decisión D3: no figuraba en la oferta inicial, pero la modalidad de cobro combinada relevada la contempla.
 
 **Dimensión aproximada de la operación:**
 
@@ -131,18 +133,21 @@ El detalle completo de necesidades, expectativas, información requerida y riesg
 
 ## 6. Módulos del sistema
 
-| # | Módulo | Descripción | Requisitos asociados |
-|---|---|---|---|
-| M1 | **Gestión de alumnos** | Alta, modificación, baja lógica y reactivación de alumnos. Padrón único con validación de DNI. | RF01 – RF05 |
-| M2 | **Gestión de cuotas y pagos** | Registro de pagos, modalidades de cobro variables, detección de morosidad e historial. | RF06 – RF10 |
-| M3 | **Planificación de actividades** | Disciplinas, clases, turnos, versiones de grilla, asignación de instructores e inscripción de alumnos. | RF11 – RF14 |
-| M4 | **Control de asistencia** | Listado de inscriptos por clase, registro de asistencia e historial. | RF15 – RF18 |
-| M5 | **Seguimiento nutricional** | Registro de consultas, evolución de parámetros y acceso restringido. | RF19 – RF21 |
-| M6 | **Gestión de instructores** | Alta y baja de instructores, asignaciones y agenda propia. | Requisitos adicionales (ver `docs/requisitos.md`) |
-| M7 | **Seguridad, usuarios y roles** | Autenticación, perfiles de usuario, permisos y auditoría. | Requisitos adicionales + RNF03 – RNF06 |
-| M8 | **Reportes** | Morosidad, ingresos, asistencia y ocupación de clases. | RF09 + requisitos adicionales |
+El sistema se organiza en ocho módulos que cubren los **31 requisitos funcionales** documentados.
 
-> **Nota de trazabilidad:** los módulos M6, M7 y M8 aparecen en el alcance del documento original pero no contaban con requisitos funcionales propios. Los requisitos que los cubren fueron incorporados por el equipo como **requisitos adicionales** y están identificados como tales en [`docs/requisitos.md`](docs/requisitos.md).
+| # | Módulo | Descripción | Requisitos | Total |
+|---|---|---|---|:---:|
+| M1 | **Gestión de alumnos** | Alta, modificación, baja lógica y reactivación. Padrón único con validación de DNI. | RF01–RF05, RF24 | 6 |
+| M2 | **Gestión de cuotas y pagos** | Registro de pagos, modalidades de cobro variables, detección de morosidad e historial. | RF06–RF10, RF30 | 6 |
+| M3 | **Planificación de actividades** | Disciplinas, clases, turnos, versiones de grilla e inscripción de alumnos. | RF11–RF14 | 4 |
+| M4 | **Control de asistencia** | Listado de inscriptos por clase, registro de asistencia, asistente ocasional e historial. | RF15–RF18, RF27 | 5 |
+| M5 | **Seguimiento nutricional** | Registro de consultas, evolución de parámetros y acceso restringido. | RF19–RF21 | 3 |
+| M6 | **Gestión de instructores** | Alta y baja de instructores, asignaciones y agenda propia. | RF25, RF26 | 2 |
+| M7 | **Seguridad, usuarios y roles** | Autenticación, gestión de usuarios, permisos y auditoría. | RF22, RF23, RF31 | 3 |
+| M8 | **Reportes de gestión** | Morosidad, ingresos y ocupación de clases. | RF28, RF29 | 2 |
+| | | | **Total** | **31** |
+
+> **Nota de trazabilidad:** los módulos M6, M7 y M8 aparecen en el alcance del documento original pero no contaban con requisitos funcionales propios. Los requisitos que los cubren fueron incorporados por el equipo como **requisitos adicionales** (RF22 a RF31, decisión D4) y están identificados como tales en [`docs/requisitos.md`](docs/requisitos.md).
 
 ---
 
@@ -158,7 +163,8 @@ La etapa actual del trabajo es de **análisis y diseño funcional**, por lo que 
 | Automatización e integración | n8n | Ejecuta procesos periódicos y automáticos que no requieren intervención de un usuario. No reemplaza al back-end. |
 | Reportes PDF | Librería de generación de PDF del lado del servidor | Exigido por RF09 (exportación del reporte de morosidad). |
 | Modelado UML | PlantUML | Diagramas versionables en texto plano dentro del repositorio. |
-| Wireframes | Figma / Balsamiq | Prototipado de baja fidelidad. |
+| Wireframes | PlantUML Salt | Misma herramienta que el resto de los diagramas: texto plano, versionable y sin licencias. Ver [`diagramas/wireframes/README.md`](diagramas/wireframes/README.md). |
+| Diagrama de arquitectura | Graphviz (DOT) | Permite fijar el apilado por capas, que PlantUML no garantiza. |
 | Documentación | Markdown | Legible en GitHub y versionable. |
 | Control de versiones | Git + GitHub | Trabajo colaborativo con ramas y Pull Requests. |
 | Gestión ágil | Tablero Kanban (GitHub Projects) | Seguimiento de historias de usuario y slices. |
@@ -183,6 +189,8 @@ La etapa actual del trabajo es de **análisis y diseño funcional**, por lo que 
                            └──────────────────────────────────┘
 ```
 
+La vista completa y detallada está en el [diagrama general de arquitectura](#101--diagrama-general-de-arquitectura) de la sección 10.
+
 **Sobre el rol de n8n.** La Web App y el back-end siguen siendo responsables de toda la funcionalidad del sistema: las altas, los cobros, la asistencia y las consultas se resuelven ahí. n8n se incorpora para lo que ocurre **sin que nadie lo pida**: tareas que se disparan por tiempo o por un evento y que hoy alguien tiene que acordarse de hacer.
 
 | Automatización prevista | Qué resuelve | Estado |
@@ -199,29 +207,35 @@ El cálculo de la morosidad y la generación de los reportes se resuelven en el 
 
 ```text
 /
-├── README.md                        # Portada del proyecto (este archivo)
-├── integrantes.md                   # Equipo, roles y responsabilidades
-├── RECURSOS.md                      # Guía de Git, GitHub, PlantUML y UML
-├── DoR.md                           # Definition of Ready del equipo
-├── slicing.md                       # Épica → historias → slices verticales
+├── README.md                         # Portada del proyecto (este archivo)
+├── integrantes.md                    # Equipo, forma de trabajo y registro de decisiones
+├── RECURSOS.md                       # Guía de Git, GitHub, PlantUML y material de consulta
+├── DoR.md                            # Definition of Ready del equipo
+├── slicing.md                        # Épicas → historias → slices verticales
 │
 ├── docs/
-│   ├── requisitos.md                # Contexto, alcance, RF, RNF y reglas de negocio
-│   ├── historias-de-usuario.md      # Historias con criterios de aceptación e INVEST
-│   ├── casos-de-uso.md              # Casos de uso desarrollados
-│   ├── er-modelo.md                 # Modelo entidad-relación y decisiones de diseño
-│   ├── diseño-ui.md                 # Documentación funcional de pantallas
-│   └── stakeholders.md              # Análisis y matriz de stakeholders
+│   ├── requisitos.md                 # Contexto, alcance, RF, RNF, reglas y restricciones
+│   ├── historias-de-usuario.md       # Historias con criterios de aceptación e INVEST
+│   ├── casos-de-uso.md               # Casos de uso desarrollados
+│   ├── er-modelo.md                  # Modelo entidad-relación y decisiones de diseño
+│   ├── diseño-ui.md                  # Documentación funcional de las pantallas
+│   └── stakeholders.md               # Análisis y matrices de stakeholders
 │
 ├── diagramas/
-│   ├── arquitectura-general.dot     # Diagrama general de arquitectura (Graphviz)
-│   ├── arquitectura-general.png     # Imagen generada del diagrama general
-│   ├── arquitectura-general.svg     # Versión vectorial del diagrama general
-│   ├── casos-de-uso.puml            # Diagrama UML de casos de uso (PlantUML)
-│   ├── er.puml                      # Modelo entidad-relación (PlantUML)
-│   └── wireframes/                  # Bocetos de las pantallas principales
+│   ├── arquitectura-general.dot      # Diagrama general de arquitectura (Graphviz)
+│   ├── arquitectura-general.png      # Imagen generada del diagrama general
+│   ├── casos-de-uso.puml             # Diagrama UML de casos de uso (PlantUML)
+│   ├── er.puml                       # Modelo entidad-relación (PlantUML)
+│   └── wireframes/
+│       ├── README.md                 # Criterio, herramienta y listado de bocetos
+│       ├── NN-<pantalla>.puml        # Fuente de cada wireframe (PlantUML Salt)
+│       ├── NN-<pantalla>.png         # Render de cada wireframe
+│       └── explicaciones/            # Un .md por wireframe: qué muestra y por qué
 │
-└── cuestionario/                    # Relevamiento: preguntas y respuestas
+└── cuestionario/
+    ├── cuestionario-relevamiento.md  # Guías de entrevista, encuesta y observación
+    ├── respuestas-relevamiento.md    # Respuestas obtenidas
+    └── hallazgos.md                  # Hallazgos y su derivación a requisitos
 ```
 
 ---
@@ -230,16 +244,18 @@ El cálculo de la morosidad y la generación de los reportes se resuelven en el 
 
 | Documento | Contenido | Estado |
 |---|---|---|
-| [`docs/requisitos.md`](docs/requisitos.md) | Contexto, problema, objetivos, alcance, RF01–RF21, RNF01–RNF13, reglas de negocio, restricciones, roles y permisos, supuestos y dependencias. | Pendiente |
-| [`docs/historias-de-usuario.md`](docs/historias-de-usuario.md) | Historias de usuario con rol, módulo, requisitos relacionados, criterios de aceptación y evaluación INVEST. | Pendiente |
-| [`docs/casos-de-uso.md`](docs/casos-de-uso.md) | Casos de uso con actores, precondiciones, postcondiciones, flujo normal, alternativas, excepciones y reglas de negocio. | Pendiente |
-| [`docs/er-modelo.md`](docs/er-modelo.md) | Entidades, atributos, cardinalidades, claves y justificación de las decisiones de modelado. | Pendiente |
-| [`docs/diseño-ui.md`](docs/diseño-ui.md) | Definición funcional de las pantallas del sistema: objetivo, acceso por rol, elementos, acciones, validaciones y navegación. | Pendiente |
-| [`docs/stakeholders.md`](docs/stakeholders.md) | Fichas de cada parte interesada y matriz de impacto/interés. | Pendiente |
-| [`DoR.md`](DoR.md) | Condiciones que debe cumplir una historia para entrar a desarrollo, checklist y autoevaluación del equipo. | Pendiente |
-| [`slicing.md`](slicing.md) | Descomposición de épicas en historias y slices verticales entregables. | Pendiente |
-| [`RECURSOS.md`](RECURSOS.md) | Guía práctica de trabajo con Git, GitHub, PlantUML y material de consulta. | Pendiente |
-| [`cuestionario/`](cuestionario/) | Cuestionario de relevamiento aplicado a los stakeholders y sus respuestas. | Pendiente |
+| [`docs/requisitos.md`](docs/requisitos.md) | Contexto, problema, objetivos, alcance, **RF01–RF31**, **RNF01–RNF13**, **RN01–RN29**, restricciones RE01–RE11, roles y matriz de permisos, dependencias y supuestos S01–S08. | Completo |
+| [`docs/historias-de-usuario.md`](docs/historias-de-usuario.md) | **24 historias** con rol, módulo, requisitos relacionados, criterios de aceptación y evaluación INVEST justificada. | Completo |
+| [`docs/casos-de-uso.md`](docs/casos-de-uso.md) | **17 casos de uso** (CU-00 a CU-16) con actores, precondiciones, postcondiciones, flujo normal, alternativas, excepciones, rendimiento y frecuencia estimada. | Completo |
+| [`docs/er-modelo.md`](docs/er-modelo.md) | **18 entidades** con diccionario de datos, cardinalidades, claves, decisiones de diseño y alternativas descartadas. | Completo |
+| [`docs/diseño-ui.md`](docs/diseño-ui.md) | **19 pantallas** (P01–P19): objetivo, acceso por rol, elementos, acciones, validaciones, mensajes y navegación. | Completo |
+| [`docs/stakeholders.md`](docs/stakeholders.md) | **6 stakeholders** con ficha individual, matriz de impacto e interés, matriz de participación, intereses en conflicto y riesgos. | Completo |
+| [`DoR.md`](DoR.md) | Definition of Ready en cuatro bloques de criterios, aplicada a tres historias propias con su autoevaluación. | Completo |
+| [`slicing.md`](slicing.md) | **8 épicas** descompuestas en slices verticales, con orden de entrega en 9 iteraciones y patrones aplicados y descartados. | Completo |
+| [`integrantes.md`](integrantes.md) | Equipo, reparto de la carga, flujo de trabajo y registro de decisiones D1 a D15 con su motivo. | Completo |
+| [`RECURSOS.md`](RECURSOS.md) | Guía práctica de Git, GitHub, PlantUML, Graphviz y material de consulta. | Completo |
+| [`cuestionario/`](cuestionario/) | Guías de relevamiento, respuestas obtenidas y hallazgos derivados a requisitos. | Completo |
+| [`diagramas/`](diagramas/) | Diagrama de arquitectura, casos de uso, modelo ER y 10 wireframes con su explicación. | Completo |
 
 ---
 
@@ -252,7 +268,7 @@ Todos los diagramas se versionan como código fuente dentro de `diagramas/`, de 
 | [`diagramas/arquitectura-general.dot`](diagramas/arquitectura-general.dot) | Arquitectura general | Vista completa del sistema en una sola lámina: roles, puestos de acceso, capa de presentación, back-end, base de datos y automatización. |
 | [`diagramas/casos-de-uso.puml`](diagramas/casos-de-uso.puml) | Casos de uso (UML) | Actores del sistema, casos de uso por módulo y relaciones `include` / `extend`. |
 | [`diagramas/er.puml`](diagramas/er.puml) | Entidad-relación | Entidades, atributos, claves primarias y foráneas, y cardinalidades. |
-| [`diagramas/wireframes/`](diagramas/wireframes/) | Wireframes | Bocetos de baja fidelidad de las pantallas principales. |
+| [`diagramas/wireframes/`](diagramas/wireframes/) | Wireframes | 10 bocetos de baja fidelidad en PlantUML Salt, con una explicación por boceto en [`explicaciones/`](diagramas/wireframes/explicaciones/). |
 
 ### 10.1 — Diagrama general de arquitectura
 
@@ -276,7 +292,13 @@ Dos aclaraciones que el diagrama deja explícitas, porque son las que suelen mal
 - **La interfaz no valida ni decide.** Las reglas RN01 a RN29 y el control de acceso por rol se resuelven en el back-end. La matriz de permisos de `docs/requisitos.md` 10.2 define qué puede hacer cada rol sobre cada funcionalidad.
 - **n8n no reemplaza al back-end.** Define *cuándo* se ejecuta un proceso y *a quién* se le entrega el resultado. Ningún requisito funcional depende de n8n para cumplirse.
 
-### 10.2 — Cómo visualizar y regenerar los diagramas
+### 10.2 — Wireframes y sus explicaciones
+
+Los diez wireframes están en [`diagramas/wireframes/`](diagramas/wireframes/), cada uno con su fuente `.puml` y su render `.png`. La carpeta [`explicaciones/`](diagramas/wireframes/explicaciones/) contiene un documento por boceto que desarrolla qué representa, qué es cada elemento y por qué está, qué decisiones de diseño hace visibles y qué deja fuera de alcance.
+
+De las diecinueve pantallas documentadas se bocetaron diez, con el criterio de cubrir al menos una pantalla por rol, las operaciones más frecuentes del centro y las pantallas con mayor riesgo de diseño. El criterio completo está en el [README de la carpeta](diagramas/wireframes/README.md).
+
+### 10.3 — Cómo visualizar y regenerar los diagramas
 
 **Diagramas en PlantUML** (`.puml`): abrir el archivo, copiar su contenido y pegarlo en el servidor oficial <https://www.plantuml.com/plantuml/uml/>. También pueden previsualizarse desde Visual Studio Code con la extensión **PlantUML** (`jebbs.plantuml`). En [`RECURSOS.md`](RECURSOS.md) está el paso a paso de instalación.
 
@@ -284,53 +306,55 @@ Dos aclaraciones que el diagrama deja explícitas, porque son las que suelen mal
 
 ```bash
 dot -Tpng -Gdpi=110 diagramas/arquitectura-general.dot -o diagramas/arquitectura-general.png
-dot -Tsvg              diagramas/arquitectura-general.dot -o diagramas/arquitectura-general.svg
 ```
 
 Sin instalar nada, puede pegarse el contenido del `.dot` en <https://dreampuf.github.io/GraphvizOnline/>.
 
-> Si se modifica el `.dot`, hay que volver a generar el `.png` y el `.svg` en el mismo commit. La imagen del README se rompe visualmente si queda desactualizada respecto del fuente.
+> Si se modifica el `.dot`, hay que volver a generar el `.png` en el mismo commit. La imagen de este README se rompe visualmente si queda desactualizada respecto del fuente.
 
 ---
 
 ## 11. Estado del proyecto
 
-**Etapa actual:** análisis funcional y diseño de la solución. **No hay desarrollo de software iniciado.**
+**Etapa actual:** análisis funcional y diseño de la solución, **completos**. No hay desarrollo de software iniciado: la implementación queda fuera del alcance de esta entrega.
 
-| Entregable | Estado | Observaciones |
+| Entregable | Estado | Detalle |
 |---|---|---|
-| Relevamiento y contexto | Completo | Basado en las planillas provistas y entrevistas con la dirección. |
-| Identificación de stakeholders | Completo | Seis stakeholders identificados y caracterizados. |
-| Requisitos funcionales (RF01–RF21) | Completo | Se agregan requisitos adicionales para cubrir M6, M7 y M8. |
-| Requisitos no funcionales (RNF01–RNF13) | Completo | Cinco categorías: rendimiento, seguridad, usabilidad, disponibilidad y mantenibilidad. |
-| Historias de usuario | En ampliación | Cinco historias base (una por módulo); se amplía la cobertura. |
-| Casos de uso | En ampliación | Tres casos desarrollados; se suman los faltantes. |
-| Modelo entidad-relación | En revisión | Diez entidades base; se evalúan ajustes por trazabilidad. |
-| Diseño de interfaz | Pendiente | Documentación funcional de pantallas y wireframes. |
-| Slicing y DoR | Pendiente | Artefactos ágiles del equipo. |
+| Relevamiento y contexto | Completo | Seis entrevistas, encuesta a alumnos, análisis documental y observación directa. Hallazgos derivados a requisitos en `cuestionario/hallazgos.md`. |
+| Identificación de stakeholders | Completo | Seis stakeholders con ficha, matriz de impacto e interés, y mapa de intereses en conflicto. |
+| Requisitos funcionales | Completo | RF01 a RF31, agrupados en ocho módulos. Incluye RF22 a RF31 como requisitos adicionales del equipo. |
+| Requisitos no funcionales | Completo | RNF01 a RNF13 en cinco categorías: rendimiento, seguridad, usabilidad, disponibilidad y mantenibilidad, con valores verificables. |
+| Reglas de negocio y restricciones | Completo | RN01 a RN29 y RE01 a RE11, cada una vinculada a los requisitos que la exigen. |
+| Historias de usuario | Completo | 24 historias con criterios de aceptación y evaluación INVEST justificada criterio por criterio. |
+| Casos de uso | Completo | 17 casos desarrollados (CU-00 a CU-16), con excepciones, rendimiento y frecuencia estimada. |
+| Modelo entidad-relación | Completo | 18 entidades con diccionario de datos, decisiones de diseño y alternativas descartadas. |
+| Diseño de interfaz | Completo | 19 pantallas documentadas y 10 wireframes con su explicación individual. |
+| Definition of Ready | Completo | Criterios en cuatro bloques, aplicados a tres historias propias con autoevaluación. |
+| Slicing vertical | Completo | 8 épicas descompuestas en slices, con orden de entrega en nueve iteraciones. |
+| Registro de decisiones | Completo | D1 a D15 en `integrantes.md`, cada una con su motivo y los documentos que impacta. |
 | Implementación | No iniciada | Fuera del alcance de la entrega actual. |
 
-**Versión de la documentación:** v1.1 — repositorio en construcción
+**Versión de la documentación:** v1.2
 **Base:** Presentación Preliminar v1.0 (mayo de 2026)
 
 ---
 
 ## 12. Integrantes
 
-| Integrante | Rol en el equipo |
+| Integrante | Artefactos que redacta |
 |---|---|
-| **Duran, Berenice** | Análisis de requisitos y documentación |
-| **Gómez, Felipe** | Modelado de datos y diagramas UML |
-| **Rodriguez, Lautaro** | Casos de uso y control de consistencia |
-| **Verduna, Valentino** | Historias de usuario, diseño UI y coordinación del repositorio |
+| **Duran, Berenice** | `docs/requisitos.md`, `docs/stakeholders.md`, `RECURSOS.md`, `cuestionario/` |
+| **Gómez, Felipe** | `docs/er-modelo.md`, `diagramas/er.puml`, `diagramas/casos-de-uso.puml`, `DoR.md` |
+| **Rodriguez, Lautaro** | `docs/casos-de-uso.md`, `docs/historias-de-usuario.md`, `slicing.md`, `integrantes.md` |
+| **Verduna, Valentino** | `README.md`, `docs/diseño-ui.md`, `diagramas/wireframes/` |
+
+El equipo trabaja de forma **horizontal**: los cuatro participan de todas las actividades del análisis y ninguno concentra la decisión final (decisión D9). Lo que se reparte es la redacción de cada artefacto, y la revisión rota en círculo. El detalle está en [`integrantes.md`](integrantes.md).
 
 **Grupo:** Grupo 02
 **Docente:** Pedernera, Pablo
 **Institución:** Escuela Superior de Comercio N° 49 "Justo José de Urquiza" — Rosario, Santa Fe
 **Materia:** Desarrollo Web — Analista Funcional de Sistemas
 **Ciclo lectivo:** 2026
-
-El detalle de responsabilidades y la forma de trabajo del equipo están en [`integrantes.md`](integrantes.md).
 
 ---
 
@@ -364,6 +388,22 @@ git commit -m "docs: agregar README del proyecto Vitalis"
 ```
 
 Todo cambio sobre `main` se integra mediante **Pull Request** con revisión de al menos un integrante. El procedimiento completo está en [`RECURSOS.md`](RECURSOS.md).
+
+### Identificadores
+
+| Prefijo | Qué identifica | Dónde se define |
+|---|---|---|
+| `RF` / `RNF` | Requisitos funcionales y no funcionales | `docs/requisitos.md` |
+| `RN` / `RE` | Reglas de negocio y restricciones | `docs/requisitos.md` |
+| `HU` | Historias de usuario | `docs/historias-de-usuario.md` |
+| `CU` | Casos de uso | `docs/casos-de-uso.md` |
+| `P` | Pantallas | `docs/diseño-ui.md` |
+| `E` / `S` | Épicas y slices | `slicing.md` |
+| `C` | Criterios de la Definition of Ready | `DoR.md` |
+| `H` | Hallazgos del relevamiento | `cuestionario/hallazgos.md` |
+| `D` | Decisiones del equipo | `integrantes.md` |
+
+Los identificadores son únicos y estables: no se reutilizan ni se renumeran (decisión D1).
 
 ---
 
