@@ -1,31 +1,365 @@
-@startuml
-title Modelo Entidad-Relación - [Nombre del Sistema]
+@startuml er-vitalis
+' ============================================================
+'  Modelo Entidad-Relacion
+'  Sistema de Gestion Integral - Vitalis Centro de Entrenamiento
+'  Escuela Superior de Comercio N 49 "Justo Jose de Urquiza"
+'  Grupo 02 - Desarrollo Web / Analista Funcional de Sistemas
+'
+'  Documentacion asociada: docs/er-modelo.md
+'  Visualizar en: https://www.plantuml.com/plantuml/uml/
+'
+'  Convenciones:
+'    *          atributo obligatorio
+'    --         separa la clave primaria del resto
+'    <<PK>>     clave primaria
+'    <<FK>>     clave foranea
+'    <<U>>      valor unico
+'  Cardinalidades:
+'    ||--o{     uno a muchos (el lado muchos puede ser cero)
+'    ||--|{     uno a muchos (el lado muchos es al menos uno)
+'    ||--o|     uno a uno opcional
+' ============================================================
 
-' --- Entidades ---
-entity Entidad1 {
-  * id_entidad1 : integer <<PK>>
-  --
-  atributo1 : varchar
-  atributo2 : varchar
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 40
+skinparam ranksep 55
+
+skinparam class {
+  BackgroundColor #F2F5FA
+  BorderColor #1F3864
+  ArrowColor #1F3864
+  FontColor #202020
 }
 
-entity Entidad2 {
-  * id_entidad2 : integer <<PK>>
+title Modelo Entidad-Relacion\nSistema de Gestion Integral - Vitalis Centro de Entrenamiento
+
+' ============================================================
+'  M1 - GESTION DE ALUMNOS
+' ============================================================
+
+entity "Alumno" as alumno {
+  * id_alumno : integer <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  * legajo : integer <<U>>
+  * apellido : varchar(80)
+  * nombre : varchar(80)
+  * dni : varchar(15) <<U>>
+  * fecha_nacimiento : date
+  telefono : varchar(30)
+  email : varchar(120)
+  * fecha_alta : date
+  * estado : varchar(15)
+  fecha_baja : date
+  motivo_baja : varchar(60)
+  observacion_baja : text
+  * id_modalidad : integer <<FK>>
+  id_tutor : integer <<FK>>
 }
 
-entity Entidad3 {
-  * id_entidad3 : integer <<PK>>
+entity "Tutor" as tutor {
+  * id_tutor : integer <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  * apellido : varchar(80)
+  * nombre : varchar(80)
+  * dni : varchar(15) <<U>>
+  * telefono : varchar(30)
+  email : varchar(120)
+  * parentesco : varchar(30)
 }
 
-' --- Relaciones ---
-' Sintaxis: EntidadA [cardinalidad] -- [cardinalidad] EntidadB : "etiqueta"
-Entidad1 ||--o{ Entidad2 : "relación"
-Entidad1 ||--o{ Entidad3 : "relación"
+' ============================================================
+'  M2 - GESTION DE CUOTAS Y PAGOS
+' ============================================================
+
+entity "ModalidadCobro" as modalidad {
+  * id_modalidad : integer <<PK>>
+  --
+  * nombre : varchar(60) <<U>>
+  descripcion : varchar(200)
+  * tipo : varchar(20)
+  * monto_base : decimal(12,2)
+  * estado : varchar(15)
+}
+
+entity "Cuota" as cuota {
+  * id_cuota : integer <<PK>>
+  --
+  * id_alumno : integer <<FK>>
+  * id_modalidad : integer <<FK>>
+  * monto : decimal(12,2)
+  periodo_mes : integer
+  periodo_anio : integer
+  cantidad_clases : integer
+  * fecha_pago : date
+  * medio_pago : varchar(20)
+  * estado : varchar(15)
+  * id_usuario_registro : integer <<FK>>
+}
+
+' ============================================================
+'  M3 - PLANIFICACION DE ACTIVIDADES
+' ============================================================
+
+entity "Disciplina" as disciplina {
+  * id_disciplina : integer <<PK>>
+  --
+  * nombre : varchar(60) <<U>>
+  descripcion : varchar(200)
+  * publico : varchar(15)
+  * estado : varchar(15)
+}
+
+entity "Grilla" as grilla {
+  * id_grilla : integer <<PK>>
+  --
+  * nombre : varchar(60)
+  * fecha_desde : date
+  fecha_hasta : date
+  * activa : boolean
+}
+
+entity "Clase" as clase {
+  * id_clase : integer <<PK>>
+  --
+  * id_disciplina : integer <<FK>>
+  * id_grilla : integer <<FK>>
+  * id_instructor : integer <<FK>>
+  * turno : varchar(15)
+  * dia_semana : varchar(15)
+  * hora_inicio : time
+  * hora_fin : time
+  observacion : varchar(200)
+  * estado : varchar(15)
+}
+
+entity "Inscripcion" as inscripcion {
+  * id_inscripcion : integer <<PK>>
+  --
+  * id_alumno : integer <<FK>>
+  * id_clase : integer <<FK>>
+  * fecha_inscripcion : date
+  fecha_baja : date
+  * estado : varchar(15)
+}
+
+' ============================================================
+'  M4 - CONTROL DE ASISTENCIA
+' ============================================================
+
+entity "Asistencia" as asistencia {
+  * id_asistencia : integer <<PK>>
+  --
+  * id_alumno : integer <<FK>>
+  * id_clase : integer <<FK>>
+  id_inscripcion : integer <<FK>>
+  * id_instructor : integer <<FK>>
+  * fecha : date
+  * hora_registro : time
+  * estado : varchar(15)
+  * es_ocasional : boolean
+}
+
+' ============================================================
+'  M5 - SEGUIMIENTO NUTRICIONAL
+' ============================================================
+
+entity "Nutricionista" as nutricionista {
+  * id_nutricionista : integer <<PK>>
+  --
+  * apellido : varchar(80)
+  * nombre : varchar(80)
+  * matricula : varchar(30) <<U>>
+  email : varchar(120)
+  * estado : varchar(15)
+}
+
+entity "Paciente" as paciente {
+  * id_paciente : integer <<PK>>
+  --
+  * id_alumno : integer <<FK>> <<U>>
+  * id_nutricionista : integer <<FK>>
+  * fecha_alta : date
+  fecha_autorizacion_tutor : date
+  * estado : varchar(15)
+}
+
+entity "SeguimientoNutricional" as seguimiento {
+  * id_seguimiento : integer <<PK>>
+  --
+  * id_paciente : integer <<FK>>
+  * fecha : date
+  * peso : decimal(5,2)
+  * altura : decimal(5,2)
+  per_cintura : decimal(5,2)
+  per_cadera : decimal(5,2)
+  masa_grasa : decimal(5,2)
+  * objetivo : varchar(200)
+  observaciones : text
+}
+
+' ============================================================
+'  M6 - GESTION DE INSTRUCTORES
+' ============================================================
+
+entity "Instructor" as instructor {
+  * id_instructor : integer <<PK>>
+  --
+  * apellido : varchar(80)
+  * nombre : varchar(80)
+  * dni : varchar(15) <<U>>
+  telefono : varchar(30)
+  email : varchar(120)
+  * fecha_alta : date
+  * estado : varchar(15)
+}
+
+entity "InstructorEspecialidad" as especialidad {
+  * id_instructor : integer <<PK>> <<FK>>
+  * id_disciplina : integer <<PK>> <<FK>>
+}
+
+' ============================================================
+'  M7 - SEGURIDAD Y CONFIGURACION
+' ============================================================
+
+entity "Rol" as rol {
+  * id_rol : integer <<PK>>
+  --
+  * nombre : varchar(30) <<U>>
+  descripcion : varchar(200)
+}
+
+entity "Usuario" as usuario {
+  * id_usuario : integer <<PK>>
+  --
+  * nombre_usuario : varchar(40) <<U>>
+  * hash_contrasena : varchar(255)
+  * id_rol : integer <<FK>>
+  id_alumno : integer <<FK>>
+  id_instructor : integer <<FK>>
+  id_nutricionista : integer <<FK>>
+  * estado : varchar(15)
+  ultimo_acceso : datetime
+}
+
+entity "LogAuditoria" as log {
+  * id_log : integer <<PK>>
+  --
+  * id_usuario : integer <<FK>>
+  * fecha_hora : datetime
+  * tipo_operacion : varchar(30)
+  * entidad_afectada : varchar(40)
+  id_registro_afectado : integer
+  valor_anterior : text
+  valor_nuevo : text
+}
+
+entity "ParametroSistema" as parametro {
+  * id_parametro : integer <<PK>>
+  --
+  * clave : varchar(50) <<U>>
+  * valor : varchar(100)
+  descripcion : varchar(200)
+  id_usuario_modificacion : integer <<FK>>
+  fecha_modificacion : datetime
+}
+
+' ============================================================
+'  RELACIONES
+' ============================================================
+
+' --- M1: gestion de alumnos ---
+tutor        ||--o{ alumno       : "es responsable de"
+modalidad    ||--o{ alumno       : "es asignada a"
+
+' --- M2: cuotas y pagos ---
+alumno       ||--o{ cuota        : "abona"
+modalidad    ||--o{ cuota        : "se aplica en"
+
+' --- M3: planificacion ---
+disciplina   ||--o{ clase        : "se dicta en"
+grilla       ||--o{ clase        : "contiene"
+instructor   ||--o{ clase        : "dicta"
+alumno       ||--o{ inscripcion  : "realiza"
+clase        ||--o{ inscripcion  : "recibe"
+
+' --- M4: asistencia ---
+alumno       ||--o{ asistencia   : "registra"
+clase        ||--o{ asistencia   : "genera"
+inscripcion  ||--o{ asistencia   : "respalda (opcional)"
+instructor   ||--o{ asistencia   : "efectua"
+
+' --- M5: seguimiento nutricional ---
+alumno       ||--o| paciente     : "es"
+nutricionista ||--o{ paciente    : "atiende a"
+paciente     ||--o{ seguimiento  : "tiene"
+
+' --- M6: instructores ---
+instructor   ||--o{ especialidad : "tiene"
+disciplina   ||--o{ especialidad : "es especialidad de"
+
+' --- M7: seguridad y configuracion ---
+rol          ||--o{ usuario      : "agrupa"
+alumno       ||--o| usuario      : "accede como"
+instructor   ||--o| usuario      : "accede como"
+nutricionista ||--o| usuario     : "accede como"
+usuario      ||--o{ log          : "genera"
+usuario      ||--o{ cuota        : "registra"
+usuario      ||--o{ parametro    : "modifica"
+
+' ============================================================
+'  NOTAS DE DISENO
+' ============================================================
+
+note bottom of asistencia
+  Referencia directa a Alumno y Clase.
+  id_inscripcion es opcional: es nulo
+  cuando se trata de un asistente
+  ocasional (RF27 / RN18 / decision D7).
+end note
+
+note bottom of cuota
+  Doble referencia a ModalidadCobro:
+  Alumno guarda la modalidad VIGENTE,
+  Cuota guarda la modalidad APLICADA
+  al momento del cobro (RN08 / decision D8).
+end note
+
+note bottom of paciente
+  Entidad intermedia. La asignacion del
+  paciente al consultorio la realiza el
+  Administrador y existe ANTES de la
+  primera consulta (RN29 / decision D10).
+end note
+
+note bottom of parametro
+  Valores iniciales:
+  umbral_mora_dias = 30
+  umbral_inactividad_dias = 60
+  umbral_ocupacion_minima = 3
+  umbral_ausencia_semanas = 2
+end note
+
+legend right
+  Simbolos de atributo
+  ....
+  *        atributo obligatorio
+  PK       clave primaria
+  FK       clave foranea
+  U        valor unico
+  ....
+  Cardinalidades
+  ....
+  uno a muchos (cero o mas)
+  uno a muchos (uno o mas)
+  uno a uno opcional
+  ....
+  Datos derivados, NO almacenados:
+  estado de cuenta, dias de mora, monto
+  adeudado, IMC, edad y ocupacion de clase.
+  Ver docs/er-modelo.md, seccion 8.
+endlegend
 
 @enduml
