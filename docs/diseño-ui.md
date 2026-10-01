@@ -2,7 +2,7 @@
 
 Sistema de Gestión Integral — Vitalis Centro de Entrenamiento
 Equipo: Grupo 02
-Versión: 1.1
+Versión: 1.3
 
 ---
 
@@ -13,17 +13,18 @@ Versión: 1.1
 - [3. Estructura común de las pantallas](#3-estructura-común-de-las-pantallas)
 - [4. Mapa de navegación](#4-mapa-de-navegación)
 - [5. Convenciones de mensajes y validaciones](#5-convenciones-de-mensajes-y-validaciones)
-- [6. Listado de pantallas](#6-listado-de-pantallas)
-- [7. Pantallas transversales](#7-pantallas-transversales)
-- [8. Pantallas de gestión de alumnos](#8-pantallas-de-gestión-de-alumnos)
-- [9. Pantallas de cuotas y pagos](#9-pantallas-de-cuotas-y-pagos)
-- [10. Pantallas de planificación](#10-pantallas-de-planificación)
-- [11. Pantallas de instructores](#11-pantallas-de-instructores)
-- [12. Pantallas de asistencia](#12-pantallas-de-asistencia)
-- [13. Pantallas del módulo nutricional](#13-pantallas-del-módulo-nutricional)
-- [14. Pantallas de gestión y configuración](#14-pantallas-de-gestión-y-configuración)
-- [15. Pantalla del alumno](#15-pantalla-del-alumno)
-- [16. Verificación de cobertura](#16-verificación-de-cobertura)
+- [6. Accesibilidad](#6-accesibilidad)
+- [7. Listado de pantallas](#7-listado-de-pantallas)
+- [8. Pantallas transversales](#8-pantallas-transversales)
+- [9. Pantallas de gestión de alumnos](#9-pantallas-de-gestión-de-alumnos)
+- [10. Pantallas de cuotas y pagos](#10-pantallas-de-cuotas-y-pagos)
+- [11. Pantallas de planificación](#11-pantallas-de-planificación)
+- [12. Pantallas de instructores](#12-pantallas-de-instructores)
+- [13. Pantallas de asistencia](#13-pantallas-de-asistencia)
+- [14. Pantallas del módulo nutricional](#14-pantallas-del-módulo-nutricional)
+- [15. Pantallas de gestión y configuración](#15-pantallas-de-gestión-y-configuración)
+- [16. Pantalla del alumno](#16-pantalla-del-alumno)
+- [17. Verificación de cobertura](#17-verificación-de-cobertura)
 
 ---
 
@@ -70,6 +71,7 @@ Los principios surgen de los requisitos no funcionales y de las restricciones re
 | 6 | **Sin resultados no es un error** | CU-03, E1 | Cuando una búsqueda o un reporte no devuelve datos, el sistema lo informa como situación normal y ofrece la acción siguiente. |
 | 7 | **La aplicación es más simple que la planilla** | RE02 | Si una operación requiere más pasos que en Excel, el diseño está mal. |
 | 8 | **Lo que puede llegar solo, llega solo** | RE11 | Si la dirección necesita un reporte todos los meses, no debería tener que acordarse de entrar a pedirlo. Ver los procesos sin pantalla de la sección 1. |
+| 9 | **La interfaz no depende del color ni del mouse** | Sección 6 | Ningún estado se comunica únicamente con color, y toda operación se puede completar con el teclado. |
 
 ---
 
@@ -116,9 +118,15 @@ Todas las pantallas del sistema, salvo el login, comparten la misma estructura.
 | Asistencia | Sí | No | Sí | No | No |
 | Instructores | Sí | No | No | No | No |
 | Consultorio | No | No | No | Sí | No |
-| Reportes | Sí | No | No | No | No |
+| Reportes | Sí | Sí | No | No | No |
 | Configuración | Sí | No | No | No | No |
 | Mi cuenta | No | No | No | No | Sí |
+
+> **Sobre la sección Reportes.** La Recepcionista accede a ella únicamente para
+> consultar el reporte de alumnos morosos (P08), conforme a la matriz de
+> permisos de `docs/requisitos.md` y al resumen de acceso por rol de la sección
+> 16 de este documento. No accede a P16 Reportes de gestión, ni puede modificar
+> el umbral de morosidad, que sigue siendo atribución del Administrador (RF30).
 
 ---
 
@@ -189,7 +197,112 @@ Según el requisito RNF09, todo mensaje debe cumplir tres condiciones: estar esc
 
 ---
 
-## 6. Listado de pantallas
+## 6. Accesibilidad
+
+Los criterios de este apartado son transversales: valen para las diecinueve pantallas y se verifican sobre cada una antes de darla por terminada.
+
+No son una formalidad. Salen de cómo y dónde se usa este sistema:
+
+| Quién | En qué condiciones | Qué exige |
+|---|---|---|
+| Recepcionista | De pie en el mostrador, con alguien esperando y las manos repartidas entre el efectivo y el teclado. | Que el cobro completo se pueda hacer sin pasar al mouse. |
+| Instructor | En el salón, con la tablet en una mano y pocos minutos entre una clase y la siguiente. | Controles grandes y separados, operables con el dedo y sin precisión. |
+| Dirección | Revisando el listado de morosos para llamar por teléfono, muchas veces impreso en blanco y negro. | Que la situación de cada alumno se entienda sin depender del color. |
+| Alumnos | Desde su propio teléfono. Las edades van de los chicos de Kids Fit and Fun a los adultos mayores de Pilates. | Texto que se pueda agrandar y contraste suficiente para leer con luz de día. |
+
+**Criterio adoptado.** El equipo toma como referencia las pautas **WCAG 2.1, nivel AA**. Este documento define lo que se puede decidir en la etapa de diseño funcional; lo que depende del marcado y de la paleta definitiva queda enunciado acá y se verifica en la implementación, según el apartado 6.6.
+
+> **Origen de estos criterios.** No derivan de un requisito no funcional: el relevamiento no planteó la accesibilidad y `docs/requisitos.md` no la cubre. El equipo los incorpora por decisión propia y propone sumarlos como **RNF14** en una próxima versión del documento de requisitos, para que queden sujetos a verificación como el resto.
+
+### 6.1 — Color y contraste
+
+| Criterio | Definición |
+|---|---|
+| Contraste de texto | Relación mínima de **4,5:1** entre el texto y su fondo. Para texto grande —18 puntos, o 14 en negrita— el mínimo baja a **3:1**. |
+| Contraste de controles | Los bordes de campos, botones y el indicador de foco mantienen al menos **3:1** contra el fondo adyacente. |
+| El color nunca es el único portador de información | Todo estado que hoy se piensa con color lleva además texto, y en los casos críticos también una diferencia de forma. |
+
+La regla del color se aplica así en las pantallas donde aparece:
+
+| Dónde | Qué se comunica | Refuerzo además del color |
+|---|---|---|
+| P03, P05 | Situación de cuenta del alumno | La palabra **Al día** o **Moroso**, y en la ficha también los días de atraso y el monto adeudado. |
+| P03 | Estado del alumno | Columna de texto con **Activo** o **Baja**. La cuenta de un alumno dado de baja se muestra con guiones, no en blanco. |
+| P08 | Gravedad de la mora | La columna de días de mora con el número. El orden del listado no se infiere de un color. |
+| P09 | Grilla vigente | La etiqueta **(ACTIVA)** escrita en el selector. |
+| P13 | Estado de asistencia | Las palabras **Presente**, **Ausente** y **Justificado** en cada botón. El botón seleccionado se distingue además por un cambio de borde, no solo de relleno. |
+| P04, P06, P14 | Campos obligatorios | El asterisco, y el mensaje de error que nombra el campo que falta. |
+
+**Prueba de control:** cada pantalla debe seguir siendo comprensible vista en escala de grises. Si al quitarle el color deja de entenderse un estado, el diseño está mal.
+
+### 6.2 — Texto y tamaño
+
+| Criterio | Definición |
+|---|---|
+| Tamaño base | 16 píxeles para el texto corriente. Ningún texto de la interfaz baja de 12. |
+| Escalado | La interfaz debe poder ampliarse hasta el **200 %** sin que se pierda contenido ni funcionalidad, y sin que aparezca desplazamiento horizontal. Implica medidas relativas, no fijas. |
+| Texto en imágenes | No se usa. Todo texto es texto seleccionable, de modo que el navegador pueda ampliarlo y un lector de pantalla leerlo. |
+| Longitud de línea | Los bloques de texto no superan los 80 caracteres por línea, para no obligar a rastrear el renglón. |
+
+El caso que gobierna este criterio es **P19 Portal del alumno**: es la única pantalla que se abre fuera del centro, en el teléfono de cualquiera, y el padrón incluye tanto a los tutores de los alumnos de Aeróbica Infantil como a los adultos mayores de Pilates y Yoga.
+
+### 6.3 — Operación por teclado
+
+| Criterio | Definición |
+|---|---|
+| Cobertura | Toda acción que se puede hacer con el mouse se puede hacer con el teclado. No existe ninguna función que dependa del puntero. |
+| Orden de tabulación | Sigue el orden visual de la pantalla: de arriba hacia abajo y de izquierda a derecha. |
+| Foco visible | El elemento con foco se distingue siempre, con un indicador que no se apoya únicamente en el color. |
+| Sin trampas de foco | Ningún diálogo retiene el foco sin ofrecer una salida con teclado. |
+| Atajos | No se definen combinaciones propias que puedan pisar las del navegador. |
+
+El recorrido que hay que poder hacer completo sin tocar el mouse es el del cobro, porque es la operación más frecuente del mostrador y la que se hace con gente esperando:
+
+| Paso | Pantalla | Teclado |
+|---|---|---|
+| 1 | P03 | Escribir en el campo de búsqueda y confirmar con Enter. |
+| 2 | P03 | Recorrer las filas del resultado con las flechas y abrir la ficha con Enter. |
+| 3 | P05 | Llegar a **Registrar pago** con Tab y activarlo con Enter. |
+| 4 | P06 | Confirmar con Enter, con los campos ya precargados. |
+
+Esto es coherente con lo ya definido en **P01**, donde presionar Enter en el campo de contraseña equivale a pulsar Ingresar.
+
+### 6.4 — Controles táctiles
+
+| Criterio | Definición |
+|---|---|
+| Tamaño del objetivo | En **P13 Control de asistencia**, los botones de estado miden al menos **44 × 44 píxeles**. Es un valor por encima del mínimo recomendado, y se adopta porque la pantalla se opera de pie y con la tablet en una mano. |
+| Separación | Al menos 8 píxeles entre controles contiguos, para que marcar un estado no implique riesgo de tocar el de al lado. |
+| Acciones destructivas | **Dar de baja** en P05 no queda contigua a una acción frecuente, y pide confirmación explicando su efecto, conforme al principio 5. |
+
+Este apartado desarrolla el principio 3 y la restricción RE05, que ya condicionaban el diseño de P13.
+
+### 6.5 — Formularios y mensajes
+
+| Criterio | Definición |
+|---|---|
+| Etiquetas | Cada campo tiene una etiqueta visible y asociada al campo. El texto de ejemplo dentro del campo no reemplaza a la etiqueta: desaparece al escribir. |
+| Agrupación | Los bloques de un formulario largo llevan título, como ya ocurre en P04 con *Datos personales*, *Contacto* y *Actividad y cobro*. |
+| Ubicación del error | El mensaje aparece junto al campo que lo origina, además de en el resumen superior si lo hubiera. |
+| Redacción del error | El mensaje nombra el campo y dice qué hacer, conforme al principio 4 y a la convención de la sección 5. |
+| Confirmaciones | El resultado de una acción se informa con texto, no solo con un cambio de color o la desaparición de un elemento. |
+
+### 6.6 — Cómo se verifica
+
+| Criterio | Cómo se verifica | Cuándo |
+|---|---|---|
+| Contraste de texto y de controles | Medición de cada par de colores con un verificador de contraste, sobre la paleta definitiva. | Al definir la paleta. |
+| El color no es el único portador | Revisión de cada pantalla en escala de grises. | Por pantalla, antes de darla por terminada. |
+| Escalado al 200 % | Prueba manual en el navegador, verificando que no aparezca desplazamiento horizontal. | Por pantalla. |
+| Operación por teclado | Recorrido completo del cobro, P03 → P05 → P06, sin usar el mouse. | Por iteración. |
+| Tamaño de los objetivos táctiles | Medición sobre la tablet que efectivamente se usa en el salón. | Al entregar P13. |
+| Etiquetas asociadas y orden de foco | Inspección del marcado. | En la implementación. |
+
+**Lo que queda fuera de este documento.** La prueba con lectores de pantalla y la validación automática del marcado requieren la aplicación construida: no pueden resolverse en la etapa de diseño funcional. Quedan registradas como verificación pendiente para la etapa de implementación, junto con la incorporación del RNF14 propuesto al comienzo de esta sección.
+
+---
+
+## 7. Listado de pantallas
 
 | ID | Pantalla | Acceso | Historias | Casos de uso |
 |---|---|---|---|---|
@@ -217,7 +330,7 @@ Según el requisito RNF09, todo mensaje debe cumplir tres condiciones: estar esc
 
 ---
 
-## 7. Pantallas transversales
+## 8. Pantallas transversales
 
 ### P01 — Login
 
@@ -324,7 +437,7 @@ No aplica. Es una pantalla de solo lectura.
 
 ---
 
-## 8. Pantallas de gestión de alumnos
+## 9. Pantallas de gestión de alumnos
 
 ### P03 — Gestión de alumnos
 
@@ -518,7 +631,7 @@ No aplica. Es una pantalla de solo lectura.
 
 ---
 
-## 9. Pantallas de cuotas y pagos
+## 10. Pantallas de cuotas y pagos
 
 ### P06 — Registro de pago
 
@@ -705,7 +818,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 | Desde | Hacia |
 |---|---|
-| Menú lateral, sección Reportes. Dashboard del Administrador, indicador de morosos. | P05 Ficha del alumno, P18 Configuración de parámetros. |
+| Menú lateral, sección Reportes, para Administrador y Recepcionista. Dashboard del Administrador, indicador de morosos. | P05 Ficha del alumno, P18 Configuración de parámetros. |
 
 **Observaciones**
 
@@ -715,7 +828,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 ---
 
-## 10. Pantallas de planificación
+## 11. Pantallas de planificación
 
 ### P09 — Gestión de clases y grillas
 
@@ -842,7 +955,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 ---
 
-## 11. Pantallas de instructores
+## 12. Pantallas de instructores
 
 ### P11 — Gestión de instructores
 
@@ -964,7 +1077,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 ---
 
-## 12. Pantallas de asistencia
+## 13. Pantallas de asistencia
 
 ### P13 — Control de asistencia
 
@@ -1029,7 +1142,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 ---
 
-## 13. Pantallas del módulo nutricional
+## 14. Pantallas del módulo nutricional
 
 ### P14 — Consultorio nutricional
 
@@ -1158,7 +1271,7 @@ En el caso más frecuente, alumno con modalidad mensual que paga el mes en curso
 
 ---
 
-## 14. Pantallas de gestión y configuración
+## 15. Pantallas de gestión y configuración
 
 ### P16 — Reportes
 
@@ -1377,7 +1490,7 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 
 ---
 
-## 15. Pantalla del alumno
+## 16. Pantalla del alumno
 
 ### P19 — Portal del alumno
 
@@ -1437,9 +1550,9 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 
 ---
 
-## 16. Verificación de cobertura
+## 17. Verificación de cobertura
 
-### 16.1 — Pantallas por historia de usuario
+### 17.1 — Pantallas por historia de usuario
 
 | Historia | Pantallas |
 |---|---|
@@ -1468,7 +1581,7 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 | HU-22 Reporte de ingresos | P16 |
 | HU-23 Ocupación de clases | P16 |
 
-### 16.2 — Controles
+### 17.2 — Controles
 
 | Control | Resultado |
 |---|---|
@@ -1479,7 +1592,7 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 | Cumplimiento de RNF08 en el registro de pago | Verificado: 4 pasos. |
 | Cumplimiento de RNF09 en los mensajes | Todos los mensajes indican la acción a seguir. |
 
-### 16.3 — Pantallas por rol
+### 17.3 — Pantallas por rol
 
 | Rol | Pantallas accesibles |
 |---|---|
@@ -1497,6 +1610,8 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 |---|---|---|
 | 1.0 | 05/2026 | Versión inicial. Diecinueve pantallas documentadas con objetivo, acceso, elementos, acciones, validaciones, navegación e información mostrada. |
 | 1.1 | 05/2026 | Incorporación del apartado de procesos automáticos sin pantalla y del principio de diseño 8, derivados de la arquitectura definida en la restricción RE11. Ninguna pantalla fue modificada. |
+| 1.2 | 09/2026 | Corrección de una inconsistencia interna: la tabla del menú por rol de la sección 3 negaba a la Recepcionista la sección Reportes, mientras que la matriz de permisos de `docs/requisitos.md` y el resumen de acceso por rol de la sección 17 de este documento le otorgan consulta sobre P08. Se habilita la sección en el menú, limitada a ese reporte. Ninguna pantalla fue modificada en su definición. |
+| 1.3 | 10/2026 | Incorporación de la sección 6, Accesibilidad, con los criterios de color y contraste, tamaño de texto, operación por teclado, controles táctiles y formularios, y su forma de verificación. Se agrega el principio de diseño 9 y se propone el requisito RNF14. Las secciones 6 a 16 pasan a numerarse 7 a 17. Ninguna pantalla fue modificada en su definición. |
 
 ---
 
