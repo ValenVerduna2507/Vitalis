@@ -1,0 +1,24 @@
+@startsalt 01-login
+' ============================================================
+'  Wireframe P01 - Login
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P01
+'  Historia HU-20 / Caso de uso CU-00 / RF22
+' ============================================================
+{
+  {+
+    .
+    .          VITALIS          .
+    .   Centro de Entrenamiento .
+    .
+    --
+    Usuario     | "                    "
+    Contrasena  | "****                "
+    .
+    .           | [   Ingresar   ]
+    --
+    { Usuario o contrasena incorrectos. }
+    { Verifica los datos e intenta de nuevo. }
+  }
+}
+@endsalt

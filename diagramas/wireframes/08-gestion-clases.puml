@@ -1,0 +1,30 @@
+@startsalt 08-gestion-clases
+' ============================================================
+'  Wireframe P09 - Gestion de clases y grillas
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P09
+'  Historias HU-12, HU-13, HU-14 / RF11, RF12, RF13
+' ============================================================
+{
+  {+
+    { VITALIS | . | Andrea Sosa (Administrador) | [Cerrar sesion] }
+    --
+    Inicio > Clases
+    ==
+    Grilla | ^Grilla regular 2026 (ACTIVA)^ | [ + Nueva clase ] | [ + Nueva grilla ] | [ Disciplinas ]
+    Turno  | (X) Manana  ( ) Tarde-noche  ( ) Ambos
+    ==
+    {#
+      Hora  | Lunes            | Martes           | Miercoles        | Jueves           | Viernes
+      08:00 | Funcional        | Pilates          | Funcional        | Pilates          | Funcional
+      .     | M. Lopez (14)    | S. Martinez (11) | M. Lopez (12)    | S. Martinez (9)  | M. Lopez (13)
+      10:00 | Yoga             | Pilates          | Yoga             | Pilates          | .
+      .     | S. Martinez (8)  | S. Martinez (12) | S. Martinez (7)  | S. Martinez (10) | .
+      11:00 | Full Body        | .                | Full Body        | .                | Full Body
+      .     | L. Fernandez (9) | .                | L. Fernandez (11)| .                | L. Fernandez (8)
+    }
+    .
+    { Entre parentesis: cantidad de alumnos inscriptos. Seleccionar una celda abre la clase. }
+  }
+}
+@endsalt

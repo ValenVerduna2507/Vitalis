@@ -1,0 +1,46 @@
+@startsalt 10-consultorio-nutricional
+' ============================================================
+'  Wireframe P14 - Consultorio nutricional
+'  Sistema de Gestion Integral - Vitalis / Grupo 02
+'  Documentacion: docs/diseno-ui.md, pantalla P14
+'  Historia HU-05a / Caso de uso CU-13 / RF19, RF21
+' ============================================================
+{
+  {+
+    { VITALIS | . | Paula Ibarra (Nutricionista) | [Cerrar sesion] }
+    --
+    Inicio > Consultorio > Nueva consulta
+    ==
+    {
+      {
+        Mis pacientes
+        --
+        {#
+          Paciente          | Ultima
+          Benitez, Laura    | 21/06
+          Cabrera, Julian   | 14/07
+          Diaz, Marina      | 07/07
+        }
+      } |
+      {
+        Consulta - Benitez, Laura (35 anos)
+        --
+        Fecha *            | "18/07/2026"
+        Peso (kg) *        | "68,4      "
+        Altura (cm) *      | "165       "
+        Per. cintura (cm)  | "78        "
+        Per. cadera (cm)   | "96        "
+        Masa grasa (%)     | "26,5      "
+        Objetivo *         | ^Descenso de peso^
+        Observaciones      | "                              "
+        --
+        { IMC calculado: 25,1  |  Consulta anterior: 70,2 kg - IMC 25,8 }
+        --
+        [ Ver historial ] | . | [ Cancelar ] | [ Guardar consulta ]
+      }
+    }
+    ==
+    { Acceso exclusivo del rol Nutricionista (RF21 / RN29) }
+  }
+}
+@endsalt
