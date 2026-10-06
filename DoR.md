@@ -485,4 +485,3 @@ Nuestra Definition of Done para esta etapa documental es:
 ---
 
 <sub>Escuela Superior de Comercio N° 49 "Justo José de Urquiza" — Desarrollo Web / Analista Funcional de Sistemas — 2026.</sub>
-
