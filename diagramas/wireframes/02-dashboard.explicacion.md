@@ -24,7 +24,7 @@ Es la primera pantalla que se ve después de iniciar sesión. El boceto muestra 
 | Zona del boceto | Qué es | Por qué está |
 |---|---|---|
 | Encabezado | Barra fija | Nombre del sistema, usuario conectado con su rol entre paréntesis, y salida. Se repite igual en todas las pantallas. |
-| Menú lateral | Navegación | Las secciones habilitadas para el rol. Una función no permitida no aparece en el menú y tampoco es accesible escribiendo la dirección (RNF03). |
+| Menú lateral | Navegación | Las secciones habilitadas para el rol. Para la Recepcionista son cinco: Inicio, Alumnos, Pagos, Clases y Reportes, esta última con acceso de solo consulta al listado de alumnos morosos (P08). Una función no permitida no aparece en el menú y tampoco es accesible escribiendo la dirección (RNF03). |
 | Tres indicadores numéricos | Datos calculados en el momento | Alumnos activos, cobros de hoy y alumnos morosos: las tres cifras que la recepcionista necesita al abrir el mostrador. |
 | Accesos rápidos | Botones | Buscar alumno, Nuevo alumno y Registrar pago. Son las tres operaciones más frecuentes del puesto. |
 | Bloque de avisos | Alerta con acción | Muestra los alumnos que quedaron sin clase tras un cambio de grilla. No es un dato decorativo: es un problema operativo concreto detectado en el relevamiento, y el botón lleva al listado para resolverlo. |
@@ -38,10 +38,6 @@ Es la primera pantalla que se ve después de iniciar sesión. El boceto muestra 
 ## Lo que este boceto no define
 
 Un wireframe define qué elementos tiene la pantalla y cómo se organizan. No define colores, tipografías, iconos ni espaciados exactos: eso corresponde a la etapa de implementación. Tampoco muestra los estados alternativos de la pantalla —errores, listas vacías, cargas en curso—, que están descriptos en `docs/diseño-ui.md`. Tampoco muestra las otras cuatro versiones del dashboard, una por cada rol restante.
-
-## Observación para revisar
-
-El menú lateral del boceto tiene cuatro entradas: Inicio, Alumnos, Pagos y Clases. La versión 1.2 de `docs/diseño-ui.md` resolvió a favor de otorgarle a la Recepcionista una quinta, **Reportes**, con acceso de solo consulta al listado de alumnos morosos (P08). El boceto todavía no la muestra: corresponde actualizar `02-dashboard.puml` y volver a generar su imagen.
 
 ---
 
