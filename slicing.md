@@ -2,7 +2,7 @@
 
 Sistema de Gestión Integral — Vitalis Centro de Entrenamiento
 Equipo: Grupo 02
-Versión: 1.1
+Versión: 1.2
 
 ---
 
@@ -15,10 +15,12 @@ Versión: 1.1
 - [5. Épica E2 — Gestionar cuotas y pagos](#5-épica-e2--gestionar-cuotas-y-pagos)
 - [6. Épica E3 — Planificar actividades](#6-épica-e3--planificar-actividades)
 - [7. Slicing del resto de las épicas](#7-slicing-del-resto-de-las-épicas)
-- [8. Patrones de división aplicados](#8-patrones-de-división-aplicados)
-- [9. Orden de entrega propuesto](#9-orden-de-entrega-propuesto)
-- [10. Criterios de tamaño y anti-patrones](#10-criterios-de-tamaño-y-anti-patrones)
-- [11. Trazabilidad épica → historia → requisito](#11-trazabilidad-épica--historia--requisito)
+- [8. Fichas de los slices de nivel 2](#8-fichas-de-los-slices-de-nivel-2)
+- [9. Parte B — Los caminos que no salen bien](#9-parte-b--los-caminos-que-no-salen-bien)
+- [10. Patrones de división aplicados](#10-patrones-de-división-aplicados)
+- [11. Orden de entrega propuesto](#11-orden-de-entrega-propuesto)
+- [12. Criterios de tamaño y anti-patrones](#12-criterios-de-tamaño-y-anti-patrones)
+- [13. Trazabilidad épica → historia → requisito](#13-trazabilidad-épica--historia--requisito)
 
 ---
 
@@ -337,7 +339,241 @@ Esta épica es la de menor prioridad porque depende de que haya datos cargados: 
 
 ---
 
-## 8. Patrones de división aplicados
+## 8. Fichas de los slices de nivel 2
+
+Las tablas de las secciones anteriores muestran **qué** incluye cada slice y **por qué** se cortó así. Esta sección los escribe en el formato de historia de usuario, con dos criterios de aceptación cada uno, que es lo que hace falta para llevarlos a una reunión de refinamiento y pasarlos por la Definition of Ready.
+
+Son los diecinueve slices de nivel 2. Los slices de nivel 1 ya están escritos como historias en `docs/historias-de-usuario.md`.
+
+### 8.1 — Slices de HU-01: alta de alumno
+
+| | |
+|---|---|
+| **S1.1 — Alta mínima** | *Como recepcionista, quiero dar de alta un alumno con su apellido, nombre y DNI, para empezar a cargar el padrón en el sistema sin depender de la planilla.* |
+| Criterio 1 | Con los tres campos completos, al guardar el alumno aparece en el listado con su estado en Activo. |
+| Criterio 2 | Si falta alguno de los tres, el sistema bloquea el guardado y el mensaje nombra el campo que falta. |
+
+| | |
+|---|---|
+| **S1.2 — Validación de DNI único** | *Como recepcionista, quiero que el sistema me avise si el DNI ya está registrado, para no duplicar alumnos en el padrón.* |
+| Criterio 1 | Si el DNI pertenece a un alumno activo, el alta se bloquea y el mensaje nombra al alumno que ya lo tiene. |
+| Criterio 2 | Si el DNI pertenece a un alumno dado de baja, el sistema ofrece reactivarlo en lugar de crear un registro nuevo. |
+
+| | |
+|---|---|
+| **S1.3 — Datos completos y modalidad** | *Como recepcionista, quiero completar el contacto, las actividades y la modalidad de cobro del alumno, para dejar su ficha lista para cobrarle la cuota.* |
+| Criterio 1 | Al guardar, el sistema asigna un legajo correlativo que no se reutiliza, y lo muestra en la confirmación. |
+| Criterio 2 | No se puede guardar sin al menos una actividad seleccionada y una modalidad de cobro elegida. |
+
+### 8.2 — Slices de HU-02: registro de pago
+
+| | |
+|---|---|
+| **S2.1 — Pago con modalidad mensual fija** | *Como recepcionista, quiero registrar el pago de la cuota mensual de un alumno, para dejar asentado el cobro en el momento en que ocurre.* |
+| Criterio 1 | El monto, el período y la fecha vienen precargados según la modalidad vigente del alumno, y el pago se puede confirmar sin modificar ningún campo. |
+| Criterio 2 | Al confirmar, la situación de cuenta del alumno pasa a Al día y el pago queda visible en su historial. |
+
+| | |
+|---|---|
+| **S2.2 — Pago con modalidad por clase** | *Como recepcionista, quiero registrar el pago de un alumno que abona por clase, para cobrarle sin inventarle un período mensual.* |
+| Criterio 1 | El formulario pide la cantidad de clases abonadas en lugar del período, y bloquea la confirmación si no se indica. |
+| Criterio 2 | Un alumno con esta modalidad no aparece nunca en el listado de morosos, conforme a la regla RN25. |
+
+| | |
+|---|---|
+| **S2.3 — Pago con modalidad combinada** | *Como recepcionista, quiero registrar el pago de un alumno con tarifa combinada, para cobrarle el monto correcto sin calcularlo a mano.* |
+| Criterio 1 | El monto sugerido es el de la modalidad combinada asignada al alumno, que no es la suma de las tarifas individuales. |
+| Criterio 2 | El monto se puede modificar, y la cuota guarda el valor efectivamente cobrado junto con la modalidad aplicada. |
+
+### 8.3 — Slices de HU-03: reporte de morosos
+
+| | |
+|---|---|
+| **S3.1 — Listado de morosos en pantalla** | *Como directora, quiero ver en pantalla el listado de alumnos con cuota vencida, para saber a quién reclamar sin revisar la planilla fila por fila.* |
+| Criterio 1 | El listado muestra legajo, apellido y nombre, actividad, días de mora, monto adeudado y teléfono. |
+| Criterio 2 | Si no hay alumnos morosos, el sistema lo informa como una situación normal y no como un error. |
+
+| | |
+|---|---|
+| **S3.2 — Filtros por actividad y turno** | *Como directora, quiero filtrar el listado de morosos por actividad y por turno, para organizar la cobranza como la organizo hoy.* |
+| Criterio 1 | Al aplicar un filtro, la cantidad de morosos y el monto adeudado total se recalculan sobre el subconjunto filtrado. |
+| Criterio 2 | Los filtros se combinan entre sí y se pueden limpiar sin salir de la pantalla. |
+
+| | |
+|---|---|
+| **S3.3 — Exportación a PDF** | *Como directora, quiero exportar el listado de morosos a PDF, para trabajarlo impreso fuera del sistema.* |
+| Criterio 1 | El PDF contiene exactamente las filas visibles según los filtros aplicados, en el mismo orden. |
+| Criterio 2 | El archivo incluye la fecha de generación y el umbral de mora con el que se calculó. |
+
+| | |
+|---|---|
+| **S3.4 — Umbral de mora configurable** | *Como directora, quiero cambiar el umbral de días de mora, para ajustar el criterio sin pedírselo al equipo de desarrollo.* |
+| Criterio 1 | Al cambiar el umbral, el listado se recalcula con el valor nuevo sin salir de la pantalla. |
+| Criterio 2 | El valor queda guardado como parámetro del sistema y rige para las consultas siguientes. El valor por defecto es 30 días. |
+
+### 8.4 — Slices de HU-14: versionado de grilla
+
+| | |
+|---|---|
+| **S4.1 — Grilla única activa** | *Como directora, quiero ver y editar la grilla semanal de clases, para sacar la planificación de Excel.* |
+| Criterio 1 | La grilla se muestra como calendario semanal por turno, con disciplina, instructor y cantidad de inscriptos en cada celda. |
+| Criterio 2 | Toda clase que se cree o se modifique queda asociada a la grilla activa. |
+
+| | |
+|---|---|
+| **S4.2 — Crear una grilla copiando la activa** | *Como directora, quiero crear una grilla nueva a partir de la vigente, para armar la temporada siguiente sin cargar todo de cero.* |
+| Criterio 1 | La grilla nueva nace con todas las clases de la activa, y editarla no modifica la que está en uso. |
+| Criterio 2 | Mientras la nueva no se active, la grilla vigente sigue siendo la anterior. |
+
+| | |
+|---|---|
+| **S4.3 — Activar una grilla y consultar las anteriores** | *Como directora, quiero activar una grilla y seguir consultando las anteriores, para cambiar de temporada sin perder lo que había.* |
+| Criterio 1 | Solo una grilla puede estar activa a la vez, y la pantalla indica cuál es con una etiqueta escrita. |
+| Criterio 2 | Las grillas no activas se consultan en modo lectura, sin posibilidad de editarlas. |
+
+### 8.5 — Slices de HU-04: toma de asistencia
+
+| | |
+|---|---|
+| **S5.1 — Ver el listado de inscriptos** | *Como instructor, quiero ver desde la tablet el listado de inscriptos de mi clase del día, para dejar de imprimir la lista en papel.* |
+| Criterio 1 | El instructor ve únicamente las clases que dicta ese día. |
+| Criterio 2 | El listado se lee completo en la pantalla de la tablet, sin desplazamiento horizontal. |
+
+| | |
+|---|---|
+| **S5.2 — Marcar Presente y Ausente** | *Como instructor, quiero marcar presente o ausente a cada alumno, para registrar la asistencia apenas termina la clase.* |
+| Criterio 1 | Cada alumno se marca con un solo toque y los contadores de presentes y ausentes se actualizan a la vista. |
+| Criterio 2 | La asistencia de toda la clase se guarda con una única confirmación, no con un guardado por alumno. |
+
+| | |
+|---|---|
+| **S5.3 — Estado Justificado y sello de fecha y hora** | *Como instructor, quiero marcar una ausencia como justificada y que quede registrada la hora, para distinguir al que avisó del que no apareció.* |
+| Criterio 1 | El tercer estado aparece junto a Presente y Ausente, con la palabra escrita en el botón. |
+| Criterio 2 | Cada registro guarda la fecha y la hora en que se tomó la asistencia. |
+
+### 8.6 — Slices de HU-20: acceso al sistema
+
+| | |
+|---|---|
+| **S6.1 — Login con usuario y contraseña** | *Como usuario del sistema, quiero ingresar con mi usuario y mi contraseña, para que quede registrado quién carga cada dato.* |
+| Criterio 1 | Con credenciales válidas el sistema abre el panel principal; con inválidas muestra un mensaje que no revela cuál de los dos campos falló. |
+| Criterio 2 | La contraseña no se muestra en pantalla ni queda legible en la base de datos. |
+
+| | |
+|---|---|
+| **S6.2 — Menú diferenciado por rol** | *Como usuario del sistema, quiero ver en el menú solo las secciones que me corresponden, para no perderme entre opciones que no puedo usar.* |
+| Criterio 1 | El menú se arma a partir del rol del usuario conectado. |
+| Criterio 2 | Dos roles distintos que ingresan al mismo sistema ven menús distintos. |
+
+| | |
+|---|---|
+| **S6.3 — Restricción efectiva de acceso** | *Como directora, quiero que las funciones no permitidas estén bloqueadas de verdad, para que los datos del consultorio no queden al alcance de recepción.* |
+| Criterio 1 | Un usuario que escribe la dirección de una pantalla no permitida recibe un rechazo del servidor, no solamente un menú sin esa opción. |
+| Criterio 2 | El intento de acceso no autorizado queda registrado en el log de auditoría. |
+
+---
+
+## 9. Parte B — Los caminos que no salen bien
+
+Las secciones anteriores cortan las épicas en partes que entregan valor. Esta pregunta otra cosa: **qué hace el sistema cuando la operación no termina como debería**, y sobre todo **quién tendría que decidirlo**.
+
+**Historia elegida: S2.1 — Registrar el pago de una cuota mensual** (épica E2, historia HU-02).
+
+La elegimos por tres motivos: es la operación más frecuente del centro, es la única que mueve dinero, y es la que se hace con alguien esperando del otro lado del mostrador, que es justamente cuando se cometen los errores.
+
+### 9.1 — Quién decide qué
+
+No todas estas preguntas las contesta la misma persona, y confundirlas es la forma más común de trabarse:
+
+| Quién | Qué resuelve |
+|---|---|
+| **Negocio** | Qué es aceptable para Vitalis: si se admite un pago parcial, si se puede cobrar a un alumno dado de baja, qué pasa con la plata ya cobrada. La respuesta la da la dirección y el equipo la registra. |
+| **Analista** | Qué ve y qué puede hacer la persona que está usando el sistema en ese momento: el texto del mensaje, si los datos se conservan, si la operación se puede reintentar. |
+| **Técnica** | Cómo se garantiza lo que las dos anteriores decidieron. No cambia lo que el sistema hace: cambia cómo se asegura de hacerlo. |
+
+### 9.2 — Las cinco preguntas
+
+| Pregunta | Qué hace el sistema | Quién decide |
+|---|---|---|
+| ¿Qué pasa si el saldo es insuficiente? → **El alumno entrega menos de lo que vale la cuota** | Acepta el pago y registra el monto realmente entregado, no el sugerido | **Negocio** |
+| ¿Qué pasa si el destinatario no existe o está dado de baja? → **El alumno está dado de baja** | No permite cobrar: pide reactivarlo primero | **Negocio**, con el camino de salida definido por el **analista** |
+| ¿Qué pasa si el sistema descuenta el saldo y falla antes de acreditarlo del otro lado? | O queda registrada la cuota completa, o no queda nada | **Técnica** |
+| ¿Qué pasa si el usuario aprieta "Enviar" dos veces? | La segunda confirmación no crea una segunda cuota | **Técnica**, y **negocio** para el segundo cobro deliberado |
+| ¿Qué pasa si se cae la conexión justo después de confirmar? | Los datos quedan cargados y el reintento no duplica el cobro | **Analista** y **técnica** |
+
+### 9.3 — Cada caso en detalle
+
+**1. El saldo es insuficiente — acá: el alumno entrega menos de lo que vale la cuota**
+
+En una billetera, el saldo insuficiente impide la operación. En un cobro de mostrador no: el alumno aparece con lo que tiene y la recepcionista cobra eso. Pasa, y bastante.
+
+El sistema acepta cualquier monto mayor a cero. El monto sugerido es una sugerencia, no una imposición, y la cuota guarda el valor efectivamente cobrado junto con la modalidad que se aplicó, conforme a la decisión D8. Si el campo fuera de solo lectura, ese cobro parcial terminaría anotado en el cuaderno del mostrador, que es exactamente el problema que vinimos a resolver.
+
+**Quién decide: negocio.** La dirección define si acepta pagos parciales. Nosotros solo registramos la decisión.
+
+> **Lo que este caso dejó al descubierto.** La regla RN09 calcula la morosidad comparando la **fecha** del último pago contra el umbral, sin mirar el monto. Con esa regla, un alumno que paga mil pesos de una cuota de veintiocho mil queda marcado como **al día** durante treinta días. Es una consecuencia que no estaba prevista y que no se resuelve del lado técnico: hay que preguntarle a la dirección si un pago parcial cancela la mora o no. Queda registrado como punto abierto.
+
+---
+
+**2. El destinatario no existe o está dado de baja — acá: el alumno está dado de baja**
+
+El equivalente del destinatario inexistente no se puede dar: a la pantalla de cobro se entra desde la ficha de un alumno, así que no hay forma de cobrarle a alguien que no está en el padrón. El caso real es el otro: el alumno **existe pero está dado de baja**.
+
+El sistema no permite registrar el pago. La pantalla no es accesible y el mensaje dice: *"Para registrar un pago, primero reactivá al alumno."* No se bloquea y listo: se indica la acción siguiente, y reactivar son dos clics porque el alumno conserva todos sus datos (baja lógica, regla RN02).
+
+**Quién decide: negocio**, en el fondo. Permitir cobrar a un alumno de baja significaría que el padrón activo deja de ser confiable para cualquier reporte. Sobre esa base, el **analista** decide la forma: que no sea un error ciego sino un camino con salida.
+
+---
+
+**3. El sistema descuenta el saldo y falla antes de acreditarlo del otro lado**
+
+En una transferencia este es el caso grave: la plata sale de una cuenta y no entra en la otra. En nuestro sistema el riesgo es mucho menor, y no por casualidad: **la situación de cuenta no se almacena, se calcula**. No hay un campo "días de mora" ni "monto adeudado" que haya que actualizar junto con el pago; se derivan de las cuotas registradas cada vez que alguien consulta. Esa decisión está en la sección 8 de `docs/er-modelo.md` y se tomó por otro motivo —evitar datos que quedan desactualizados—, pero tiene este beneficio colateral: **registrar un pago es una sola escritura**.
+
+Lo que queda por garantizar es que esa única escritura no quede a medias. La decisión es que la cuota se guarda entera o no se guarda: si algo falla, no queda ningún registro parcial, y la recepcionista ve el aviso con los datos todavía en pantalla.
+
+**Quién decide: técnica.** El negocio no tiene que opinar sobre cómo se garantiza. Lo que el negocio exige es más simple y no se negocia: **no puede existir plata cobrada que el sistema no muestre, ni un pago mostrado que nadie haya cobrado.**
+
+---
+
+**4. El usuario aprieta "Enviar" dos veces**
+
+Es el caso que pasa de verdad. En el pico del 1 al 10, con más de treinta cobros diarios y alguien esperando, el doble clic es cuestión de tiempo.
+
+Detrás del mismo gesto hay dos situaciones distintas, y se resuelven distinto:
+
+| Situación | Qué hace el sistema |
+|---|---|
+| Dos envíos de la **misma** confirmación, por doble clic o por un reenvío del navegador | Se registra una sola cuota. El botón se desactiva al primer toque, y además la confirmación viaja con un identificador único de la operación: si llega dos veces, la segunda no crea nada y devuelve el mismo resultado que la primera. |
+| Un segundo cobro **deliberado** del mismo período, hecho más tarde | Se permite. El sistema advierte —*"Ya hay un pago registrado para agosto de 2026 por 28.000 pesos. ¿Querés registrar otro pago para el mismo período?"*— y la recepcionista decide. |
+
+**Quién decide: las dos cosas.** Que un doble clic no genere dos cuotas es **técnica**: el negocio ni se entera de que el problema existe. Que un segundo pago intencional para el mismo período esté permitido es **negocio**, y lo definió la dirección porque ocurre: hay alumnos que adelantan dos meses juntos.
+
+> **Lo que este caso dejó al descubierto.** El identificador único de la operación no está en ningún requisito. Lo incorporamos como regla pendiente de registrar en `docs/requisitos.md`: *la confirmación de un pago es idempotente, de modo que un mismo envío repetido no genera más de una cuota*. Es justamente el tipo de requisito que aparece recién cuando uno se pregunta qué pasa si algo sale mal.
+
+---
+
+**5. Se cae la conexión justo después de confirmar**
+
+La recepcionista confirma y no llega respuesta. La pregunta que se hace ella no es técnica: **¿cobré o no cobré?**
+
+El sistema conserva los datos cargados y muestra: *"No pudimos guardar el pago porque se perdió la conexión. Los datos siguen cargados, probá de nuevo."* No se vacía el formulario ni se vuelve a la ficha del alumno: obligar a volver a tipear un cobro es la forma más rápida de que alguien lo anote en un papel y después se pierda.
+
+Al reintentar entran en juego las decisiones anteriores. Si la primera confirmación sí había llegado al servidor, el identificador del caso 4 evita que se cree una segunda cuota y la recepcionista ve el pago ya registrado. Si no había llegado, se registra ahora. En los dos casos el resultado es el mismo: **una sola cuota**, verificable en el historial del alumno sin salir de la pantalla.
+
+**Quién decide: analista y técnica.** El analista define qué ve la recepcionista, que los datos no se pierdan y que pueda reintentar. La técnica resuelve cómo se garantiza que el reintento no duplique.
+
+### 9.4 — Qué nos dejó el ejercicio
+
+| Observación | Consecuencia |
+|---|---|
+| Las decisiones de modelado cambian qué puede fallar | Al no almacenar la morosidad, el caso más grave de una transferencia —la inconsistencia entre dos escrituras— casi no existe acá. No lo resolvimos: lo evitamos sin querer, al decidir otra cosa por otro motivo. |
+| Dos de las cinco preguntas las decide el negocio, no el equipo | El pago parcial y el alumno dado de baja parecen problemas técnicos y son reglas de Vitalis. Si los hubiéramos resuelto nosotros, habríamos construido un sistema más prolijo y menos usable. |
+| Dos preguntas produjeron hallazgos que no teníamos | La idempotencia de la confirmación, que no estaba en ningún RF, y el hueco de la regla RN09 ante un pago parcial. Ninguno de los dos apareció al escribir la historia: aparecieron al preguntarnos qué pasa cuando algo sale mal. |
+| El mismo gesto puede ser dos cosas distintas | Apretar dos veces por accidente y cobrar dos veces a propósito se ven igual desde el servidor. Separarlos fue lo que más nos costó. |
+
+---
+
+## 10. Patrones de división aplicados
 
 Estos son los criterios que usamos para cortar, con el caso concreto de Vitalis en el que se aplicó cada uno.
 
@@ -361,7 +597,7 @@ Estos son los criterios que usamos para cortar, con el caso concreto de Vitalis 
 
 ---
 
-## 9. Orden de entrega propuesto
+## 11. Orden de entrega propuesto
 
 El orden combina tres criterios: qué habilita otra cosa, cuánto valor entrega y qué tan frecuente es la operación.
 
@@ -391,9 +627,9 @@ El resultado del ejercicio quedó registrado: de las cinco preguntas abiertas qu
 
 ---
 
-## 10. Criterios de tamaño y anti-patrones
+## 12. Criterios de tamaño y anti-patrones
 
-### 10.1 — Cuándo hay que dividir
+### 12.1 — Cuándo hay que dividir
 
 Dividimos una historia si se cumple alguna de estas condiciones:
 
@@ -406,7 +642,7 @@ Dividimos una historia si se cumple alguna de estas condiciones:
 | No entra en una iteración. | HU-14 con versionado completo. |
 | Una parte está bloqueada por una definición del cliente y el resto no. | HU-02: la modalidad por clase bloqueada, las otras dos no. |
 
-### 10.2 — Cuándo no hay que dividir
+### 12.2 — Cuándo no hay que dividir
 
 | Señal | Motivo |
 |---|---|
@@ -414,7 +650,7 @@ Dividimos una historia si se cumple alguna de estas condiciones:
 | La división genera más trabajo de integración que el que ahorra. | Separar el formulario del guardado obliga a hacer dos veces lo mismo. |
 | La historia ya entra holgada en una iteración. | HU-07 (baja lógica) es un cambio de estado. Dividirla sería absurdo. |
 
-### 10.3 — Anti-patrones de slicing que detectamos
+### 12.3 — Anti-patrones de slicing que detectamos
 
 | Anti-patrón | Cómo se ve | Caso en el que casi caemos |
 |---|---|---|
@@ -426,7 +662,7 @@ Dividimos una historia si se cumple alguna de estas condiciones:
 
 ---
 
-## 11. Trazabilidad épica → historia → requisito
+## 13. Trazabilidad épica → historia → requisito
 
 | Épica | Historia | Slices | Requisitos | Caso de uso |
 |---|---|---|---|---|
@@ -467,6 +703,7 @@ Dividimos una historia si se cumple alguna de estas condiciones:
 |---|---|---|
 | 1.0 | 05/2026 | Versión inicial. Ocho épicas, veinticuatro historias y veinte slices verticales. |
 | 1.1 | 05/2026 | Incorporación de la iteración 9 tras la resolución de los puntos abiertos A1 a A5 (decisiones D10 a D14). S2.2, HU-05a y HU-05b pasan de sin planificar a planificadas. |
+| 1.2 | 10/2026 | Incorporación de la sección 8, con los diecinueve slices de nivel 2 escritos en formato de historia de usuario y dos criterios de aceptación cada uno, y de la sección 9, que responde las cinco preguntas de la Parte B del taller sobre la historia S2.1 indicando, para cada una, qué hace el sistema y quién tiene que decidirlo. Las secciones 8 a 11 pasan a numerarse 10 a 13. Ningún corte fue modificado. |
 
 ---
 
