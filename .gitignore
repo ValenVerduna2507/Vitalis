@@ -1,0 +1,18 @@
+# Archivos que generan Windows y macOS dentro de las carpetas
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# Archivos temporales de Office y de los editores de texto
+~$*
+*.tmp
+*.bak
+*.swp
+
+# Configuración local de los editores, propia de cada integrante
+.vscode/
+.idea/
+
+# Herramientas descargadas para generar los diagramas
+plantuml.jar
