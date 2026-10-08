@@ -1,6 +1,6 @@
 # 03 — Gestión de alumnos
 
-Explicación del wireframe [`03-gestion-alumnos.puml`](../03-gestion-alumnos.puml).
+Explicación del wireframe [`03-gestion-alumnos.puml`](03-gestion-alumnos.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`03-gestion-alumnos.puml`](../03-gestion-alumnos.pum
 | **Historia** | HU-09 |
 | **Caso de uso** | — |
 | **Requisitos** | RF24, RNF09 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P03 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P03 |
 
-![Wireframe P03 — Gestión de alumnos](../03-gestion-alumnos.png)
+![Wireframe P03 — Gestión de alumnos](03-gestion-alumnos.png)
 
 ---
 

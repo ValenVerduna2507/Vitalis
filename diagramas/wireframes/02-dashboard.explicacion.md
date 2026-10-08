@@ -1,6 +1,6 @@
 # 02 — Dashboard
 
-Explicación del wireframe [`02-dashboard.puml`](../02-dashboard.puml).
+Explicación del wireframe [`02-dashboard.puml`](02-dashboard.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`02-dashboard.puml`](../02-dashboard.puml).
 | **Historia** | Transversal |
 | **Caso de uso** | — |
 | **Requisitos** | RNF03, RNF07 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P02 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P02 |
 
-![Wireframe P02 — Dashboard](../02-dashboard.png)
+![Wireframe P02 — Dashboard](02-dashboard.png)
 
 ---
 
@@ -41,7 +41,7 @@ Un wireframe define qué elementos tiene la pantalla y cómo se organizan. No de
 
 ## Observación para revisar
 
-El menú lateral del boceto tiene cuatro entradas: Inicio, Alumnos, Pagos y Clases. La tabla de menú por rol de `docs/diseño-ui.md` asigna al rol Recepcionista una entrada más, **Reportes**, con acceso de solo consulta al listado de alumnos morosos (P08). Conviene agregarla al boceto o dejar constancia de por qué no está.
+El menú lateral del boceto tiene cuatro entradas: Inicio, Alumnos, Pagos y Clases. La versión 1.2 de `docs/diseño-ui.md` resolvió a favor de otorgarle a la Recepcionista una quinta, **Reportes**, con acceso de solo consulta al listado de alumnos morosos (P08). El boceto todavía no la muestra: corresponde actualizar `02-dashboard.puml` y volver a generar su imagen.
 
 ---
 

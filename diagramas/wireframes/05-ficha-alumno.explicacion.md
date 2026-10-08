@@ -1,6 +1,6 @@
 # 05 — Ficha del alumno
 
-Explicación del wireframe [`05-ficha-alumno.puml`](../05-ficha-alumno.puml).
+Explicación del wireframe [`05-ficha-alumno.puml`](05-ficha-alumno.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`05-ficha-alumno.puml`](../05-ficha-alumno.puml).
 | **Historias** | HU-06, HU-07, HU-08, HU-16 |
 | **Casos de uso** | CU-04, CU-05, CU-06 |
 | **Requisitos** | RF03, RF04, RF05, RF10, RF18 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P05 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P05 |
 
-![Wireframe P05 — Ficha del alumno](../05-ficha-alumno.png)
+![Wireframe P05 — Ficha del alumno](05-ficha-alumno.png)
 
 ---
 

@@ -1,6 +1,6 @@
 # 10 — Consultorio nutricional
 
-Explicación del wireframe [`10-consultorio-nutricional.puml`](../10-consultorio-nutricional.puml).
+Explicación del wireframe [`10-consultorio-nutricional.puml`](10-consultorio-nutricional.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`10-consultorio-nutricional.puml`](../10-consultorio
 | **Historia** | HU-05a |
 | **Caso de uso** | CU-13 |
 | **Requisitos** | RF19, RF21, RNF06 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P14 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P14 |
 
-![Wireframe P14 — Consultorio nutricional](../10-consultorio-nutricional.png)
+![Wireframe P14 — Consultorio nutricional](10-consultorio-nutricional.png)
 
 ---
 

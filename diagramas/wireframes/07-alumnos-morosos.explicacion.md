@@ -1,6 +1,6 @@
 # 07 — Alumnos morosos
 
-Explicación del wireframe [`07-alumnos-morosos.puml`](../07-alumnos-morosos.puml).
+Explicación del wireframe [`07-alumnos-morosos.puml`](07-alumnos-morosos.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`07-alumnos-morosos.puml`](../07-alumnos-morosos.pum
 | **Historia** | HU-03 |
 | **Caso de uso** | CU-03 |
 | **Requisitos** | RF08, RF09, RF30 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P08 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P08 |
 
-![Wireframe P08 — Alumnos morosos](../07-alumnos-morosos.png)
+![Wireframe P08 — Alumnos morosos](07-alumnos-morosos.png)
 
 ---
 

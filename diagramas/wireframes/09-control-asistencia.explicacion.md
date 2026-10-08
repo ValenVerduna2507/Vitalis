@@ -1,6 +1,6 @@
 # 09 — Control de asistencia
 
-Explicación del wireframe [`09-control-asistencia.puml`](../09-control-asistencia.puml).
+Explicación del wireframe [`09-control-asistencia.puml`](09-control-asistencia.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`09-control-asistencia.puml`](../09-control-asistenc
 | **Historias** | HU-04, HU-17 |
 | **Caso de uso** | CU-12 |
 | **Requisitos** | RF15, RF16, RF17, RF27, RNF07 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P13 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P13 |
 
-![Wireframe P13 — Control de asistencia](../09-control-asistencia.png)
+![Wireframe P13 — Control de asistencia](09-control-asistencia.png)
 
 ---
 

@@ -1,6 +1,6 @@
 # 08 — Gestión de clases y grillas
 
-Explicación del wireframe [`08-gestion-clases.puml`](../08-gestion-clases.puml).
+Explicación del wireframe [`08-gestion-clases.puml`](08-gestion-clases.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`08-gestion-clases.puml`](../08-gestion-clases.puml)
 | **Historias** | HU-12, HU-13, HU-14 |
 | **Casos de uso** | CU-08, CU-09, CU-10 |
 | **Requisitos** | RF11, RF12, RF13 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P09 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P09 |
 
-![Wireframe P09 — Gestión de clases y grillas](../08-gestion-clases.png)
+![Wireframe P09 — Gestión de clases y grillas](08-gestion-clases.png)
 
 ---
 

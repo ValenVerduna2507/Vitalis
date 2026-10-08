@@ -1,6 +1,6 @@
 # 04 — Alta de alumno
 
-Explicación del wireframe [`04-alta-alumno.puml`](../04-alta-alumno.puml).
+Explicación del wireframe [`04-alta-alumno.puml`](04-alta-alumno.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`04-alta-alumno.puml`](../04-alta-alumno.puml).
 | **Historias** | HU-01, HU-06 |
 | **Casos de uso** | CU-01, CU-04, CU-06 |
 | **Requisitos** | RF01, RF02, RF03, RNF09 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P04 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P04 |
 
-![Wireframe P04 — Alta de alumno](../04-alta-alumno.png)
+![Wireframe P04 — Alta de alumno](04-alta-alumno.png)
 
 ---
 

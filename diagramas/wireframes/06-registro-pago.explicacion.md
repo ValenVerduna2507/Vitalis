@@ -1,6 +1,6 @@
 # 06 — Registro de pago
 
-Explicación del wireframe [`06-registro-pago.puml`](../06-registro-pago.puml).
+Explicación del wireframe [`06-registro-pago.puml`](06-registro-pago.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`06-registro-pago.puml`](../06-registro-pago.puml).
 | **Historia** | HU-02 |
 | **Caso de uso** | CU-02 |
 | **Requisitos** | RF06, RF07, RNF08 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P06 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P06 |
 
-![Wireframe P06 — Registro de pago](../06-registro-pago.png)
+![Wireframe P06 — Registro de pago](06-registro-pago.png)
 
 ---
 

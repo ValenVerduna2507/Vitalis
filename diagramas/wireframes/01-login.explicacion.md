@@ -1,6 +1,6 @@
 # 01 — Login
 
-Explicación del wireframe [`01-login.puml`](../01-login.puml).
+Explicación del wireframe [`01-login.puml`](01-login.puml).
 
 | | |
 |---|---|
@@ -9,9 +9,9 @@ Explicación del wireframe [`01-login.puml`](../01-login.puml).
 | **Historia** | HU-20 |
 | **Caso de uso** | CU-00 |
 | **Requisitos** | RF22, RNF03, RNF04, RNF09 |
-| **Detalle funcional** | [`docs/diseño-ui.md`](../../../docs/diseño-ui.md), pantalla P01 |
+| **Detalle funcional** | [`docs/diseño-ui.md`](../../docs/diseño-ui.md), pantalla P01 |
 
-![Wireframe P01 — Login](../01-login.png)
+![Wireframe P01 — Login](01-login.png)
 
 ---
 
