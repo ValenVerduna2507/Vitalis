@@ -224,13 +224,14 @@ El cálculo de la morosidad y la generación de los reportes se resuelven en el 
 ├── diagramas/
 │   ├── arquitectura-general.dot      # Diagrama general de arquitectura (Graphviz)
 │   ├── arquitectura-general.png      # Imagen generada del diagrama general
+│   ├── arquitectura-general.svg      # Versión vectorial, para ampliar sin perder nitidez
 │   ├── casos-de-uso.puml             # Diagrama UML de casos de uso (PlantUML)
 │   ├── er.puml                       # Modelo entidad-relación (PlantUML)
 │   └── wireframes/
 │       ├── README.md                 # Criterio, herramienta y listado de bocetos
 │       ├── NN-<pantalla>.puml        # Fuente de cada wireframe (PlantUML Salt)
 │       ├── NN-<pantalla>.png         # Render de cada wireframe
-│       └── explicaciones/            # Un .md por wireframe: qué muestra y por qué
+│       └── NN-<pantalla>.explicacion.md  # Qué muestra el boceto y por qué
 │
 └── cuestionario/
     ├── cuestionario-relevamiento.md  # Guías de entrevista, encuesta y observación
@@ -268,7 +269,7 @@ Todos los diagramas se versionan como código fuente dentro de `diagramas/`, de 
 | [`diagramas/arquitectura-general.dot`](diagramas/arquitectura-general.dot) | Arquitectura general | Vista completa del sistema en una sola lámina: roles, puestos de acceso, capa de presentación, back-end, base de datos y automatización. |
 | [`diagramas/casos-de-uso.puml`](diagramas/casos-de-uso.puml) | Casos de uso (UML) | Actores del sistema, casos de uso por módulo y relaciones `include` / `extend`. |
 | [`diagramas/er.puml`](diagramas/er.puml) | Entidad-relación | Entidades, atributos, claves primarias y foráneas, y cardinalidades. |
-| [`diagramas/wireframes/`](diagramas/wireframes/) | Wireframes | 10 bocetos de baja fidelidad en PlantUML Salt, con una explicación por boceto en [`explicaciones/`](diagramas/wireframes/explicaciones/). |
+| [`diagramas/wireframes/`](diagramas/wireframes/) | Wireframes | 10 bocetos de baja fidelidad en PlantUML Salt. Cada uno con su fuente `.puml`, su render `.png` y su archivo `.explicacion.md` al lado. |
 
 ### 10.1 — Diagrama general de arquitectura
 
@@ -294,7 +295,7 @@ Dos aclaraciones que el diagrama deja explícitas, porque son las que suelen mal
 
 ### 10.2 — Wireframes y sus explicaciones
 
-Los diez wireframes están en [`diagramas/wireframes/`](diagramas/wireframes/), cada uno con su fuente `.puml` y su render `.png`. La carpeta [`explicaciones/`](diagramas/wireframes/explicaciones/) contiene un documento por boceto que desarrolla qué representa, qué es cada elemento y por qué está, qué decisiones de diseño hace visibles y qué deja fuera de alcance.
+Los diez wireframes están en [`diagramas/wireframes/`](diagramas/wireframes/). Cada boceto tiene tres archivos juntos en esa carpeta: su fuente `.puml`, su render `.png` y su `NN-<pantalla>.explicacion.md`, que desarrolla qué representa, qué es cada elemento y por qué está, qué decisiones de diseño hace visibles y qué deja fuera de alcance.
 
 De las diecinueve pantallas documentadas se bocetaron diez, con el criterio de cubrir al menos una pantalla por rol, las operaciones más frecuentes del centro y las pantallas con mayor riesgo de diseño. El criterio completo está en el [README de la carpeta](diagramas/wireframes/README.md).
 
