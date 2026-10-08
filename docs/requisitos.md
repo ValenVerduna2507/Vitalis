@@ -2,7 +2,7 @@
 
 Sistema de Gestión Integral — Vitalis Centro de Entrenamiento
 Equipo: Grupo 02
-Versión: 1.3
+Versión: 1.4
 
 ---
 
@@ -317,6 +317,20 @@ Ningún requisito del relevamiento original fue eliminado ni modificado en su en
 | **RNF12** | El sistema debe estar desarrollado de forma modular, permitiendo incorporar nuevas funcionalidades (por ejemplo, un módulo de comunicaciones) sin refactorizar las existentes. | Revisión de la estructura del código. |
 | **RNF13** | El código debe estar documentado y contar con pruebas unitarias sobre los módulos de cobro y de acceso por roles. | Existencia y ejecución de las pruebas unitarias. |
 
+### 7.6 — Accesibilidad
+
+| ID | Requisito | Cómo se verifica |
+|---|---|---|
+| **RNF14** | La interfaz debe cumplir las pautas WCAG 2.1 en su nivel AA sobre los criterios definidos en la sección 6 de `docs/diseño-ui.md`: contraste mínimo de 4,5 a 1 para el texto corriente y de 3 a 1 para el texto grande y los controles; ninguna información comunicada únicamente por color; escalado de la interfaz hasta el 200 por ciento sin pérdida de contenido ni desplazamiento horizontal; toda acción disponible con el mouse disponible también por teclado; y objetivos táctiles de al menos 44 por 44 píxeles en las pantallas que se operan desde la tablet. | Medición del contraste de cada par de colores sobre la paleta definitiva; revisión de cada pantalla en escala de grises; prueba de escalado al 200 por ciento en el navegador; recorrido completo del cobro (P03 a P05 a P06) sin usar el mouse; y medición de los objetivos táctiles de P13 sobre la tablet que se usa en el salón. El detalle criterio por criterio está en la sección 6.6 de `docs/diseño-ui.md`. |
+
+> **Origen de RNF14.** El relevamiento no planteó la accesibilidad: ningún actor la mencionó y por eso no figura en las versiones 1.0 a 1.3 de este documento. El equipo la incorpora por decisión propia (**D16**) al advertir que tres de los cuatro perfiles de uso relevados la necesitan: la recepcionista cobra de pie, con las manos repartidas entre el efectivo y el teclado; el instructor opera la tablet con una mano en el salón, de ahí la restricción RE05; y la dirección trabaja el listado de morosos impreso en blanco y negro, de modo que la situación de cada alumno no puede depender del color. A eso se suma que el portal del alumno se abre desde el teléfono de cualquiera, y el padrón va de los chicos de Aeróbica Infantil a los adultos mayores de Pilates.
+>
+> **Relación con los requisitos ya existentes.** RNF14 no reemplaza a RNF07 ni a RNF09, los complementa. RNF07 exige que la interfaz funcione en tablet; RNF14 agrega que además se pueda operar con el dedo y sin precisión. RNF09 exige mensajes de error claros; RNF14 agrega dónde aparecen y que el resultado de una acción se informe con texto y no solo con un cambio de color. Los criterios se definieron primero en el diseño, en la sección 6 de `docs/diseño-ui.md`, y se formalizan acá para quedar sujetos a verificación como el resto.
+>
+> **Alcance de la verificación.** La prueba con lectores de pantalla y la validación automática del marcado requieren la aplicación construida y no pueden resolverse en la etapa de análisis funcional. Quedan registradas como verificación pendiente para la implementación.
+
+---
+
 ---
 
 ## 8. Reglas de negocio
@@ -391,7 +405,7 @@ Las reglas de negocio describen restricciones del dominio que el sistema debe re
 | ID | Restricción | Implicancia |
 |---|---|---|
 | **RE01** | El centro no puede interrumpir su operación durante la implementación del sistema. | La migración debe ser gradual. Cada entrega parcial debe ser usable por sí sola. Ver `slicing.md`. |
-| **RE02** | El personal administrativo actual no tiene formación técnica. | La interfaz debe ser aprendible sin capacitación formal extensa. Refuerza RNF08 y RNF09. |
+| **RE02** | El personal administrativo actual no tiene formación técnica. | La interfaz debe ser aprendible sin capacitación formal extensa. Refuerza RNF08, RNF09 y RNF14. |
 | **RE03** | El sistema debe convivir con las planillas existentes durante la transición. | Debe contemplarse la carga inicial del padrón desde los datos actuales. |
 | **RE04** | La dirección define precios y modalidades y los modifica sin previo aviso al equipo técnico. | Los montos y el umbral de mora deben ser parametrizables (RF30, RN07). |
 
@@ -633,6 +647,7 @@ No se trata de bloqueos: son definiciones que el equipo decidió postergar por e
 | 1.1 | 05/2026 | Normalización de identificadores sin guion (D1). Incorporación de RF22 a RF31 como requisitos adicionales. Formalización de reglas de negocio, restricciones, matriz de permisos, dependencias, supuestos, puntos abiertos y matriz de trazabilidad. |
 | 1.2 | 05/2026 | Resolución de los puntos abiertos A1 a A5 (decisiones D10 a D14). Incorporación de las reglas RN25 a RN29. Ajuste de la matriz de permisos con el nivel de acceso administrativo. Ningún requisito funcional ni no funcional fue modificado en su enunciado. |
 | 1.3 | 05/2026 | Incorporación de la restricción RE11 y de la sección 9.4 con la arquitectura tecnológica prevista, incluida la herramienta de automatización n8n (decisión D15). Precisión sobre la comunicación masiva como extensión futura. Ningún requisito funcional ni no funcional fue modificado. |
+| 1.4 | 10/2026 | Incorporación del apartado 7.6 y del requisito no funcional RNF14, de accesibilidad, con sus valores verificables y su forma de verificación (decisión D16). Se registra su relación con RNF07 y RNF09 y se suma la referencia en la restricción RE02. Ningún requisito existente fue modificado en su enunciado. |
 
 ---
 
