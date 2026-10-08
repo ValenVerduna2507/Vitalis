@@ -2,7 +2,7 @@
 
 Sistema de Gestión Integral — Vitalis Centro de Entrenamiento
 Equipo: Grupo 02
-Versión: 1.1
+Versión: 1.2
 
 ---
 
@@ -57,11 +57,11 @@ Durante el relevamiento en Vitalis nos encontramos con situaciones concretas que
 
 | Situación real detectada | Qué pasaría sin DoR | Qué exige nuestra DoR |
 |---|---|---|
-| El umbral de morosidad "son como 30 días, más o menos" | Se programa un valor fijo y a los dos meses la dirección lo quiere cambiar. | Todo valor de negocio debe estar **cuantificado** y definido como fijo o parametrizable (C4). |
-| Las modalidades de cobro son tres y se combinan entre sí | Se desarrolla el alta de pago pensando solo en la cuota mensual y no contempla el resto. | Toda historia que toque pagos debe indicar **cuál de las tres modalidades** contempla (C5). |
-| El módulo nutricional maneja datos de salud | Se implementa igual que el resto y queda accesible para recepción. | Toda historia que toque datos sensibles debe declarar **quién accede y quién no** (C7). |
-| Hay dos versiones de grilla conviviendo en las planillas | Se desarrolla la planificación sin versionado y se pierde el histórico. | Toda historia de planificación debe aclarar su relación con la **grilla activa** (C6). |
-| La recepcionista es quien más va a usar el sistema | Se diseña una pantalla que técnicamente funciona pero le suma pasos respecto de Excel. | Toda historia operativa debe indicar el **rol que la ejecuta** y respetar los límites de usabilidad definidos (C3, C9). |
+| El umbral de morosidad "son como 30 días, más o menos" | Se programa un valor fijo y a los dos meses la dirección lo quiere cambiar. | Todo valor de negocio debe estar **cuantificado** y definido como fijo o parametrizable (C3). |
+| Las modalidades de cobro son tres y se combinan entre sí | Se desarrolla el alta de pago pensando solo en la cuota mensual y no contempla el resto. | Toda historia que toque pagos debe indicar **cuál de las tres modalidades** contempla (C4). |
+| El módulo nutricional maneja datos de salud | Se implementa igual que el resto y queda accesible para recepción. | Toda historia que toque datos sensibles debe declarar **quién accede y quién no** (C4). |
+| Hay dos versiones de grilla conviviendo en las planillas | Se desarrolla la planificación sin versionado y se pierde el histórico. | Toda historia de planificación debe aclarar su relación con la **grilla activa** (C4). |
+| La recepcionista es quien más va a usar el sistema | Se diseña una pantalla que técnicamente funciona pero le suma pasos respecto de Excel. | Toda historia operativa debe indicar el **rol que la ejecuta** (C1) y declarar los requisitos no funcionales que la condicionan (C7). |
 
 En síntesis: el mayor riesgo de este proyecto no es técnico, es de **ambigüedad en las reglas de negocio**. La DoR está construida para atacar eso.
 
@@ -81,47 +81,23 @@ En síntesis: el mayor riesgo de este proyecto no es técnico, es de **ambigüed
 
 ## 4. Criterios de la DoR
 
-Los criterios están agrupados en cuatro bloques. Una historia debe cumplir **todos** los criterios obligatorios de los cuatro bloques.
+Son **nueve**. Cada uno existe porque evita un problema concreto: o ya nos pasó, o lo detectamos durante el relevamiento en Vitalis. Un criterio que no evita nada sobra, y así lo establece el acuerdo 3 de la sección 12.
 
-### Bloque A — Comprensión del negocio
+Los marcados **Cuando aplica** exigen justificar el N/A. No alcanza con dejarlo en blanco.
 
-| ID | Criterio | Obligatorio |
-|---|---|---|
-| **C1** | La historia está escrita en formato `Como <rol>, quiero <funcionalidad>, para <beneficio>`, y el beneficio es un valor real para el negocio de Vitalis, no una repetición de la funcionalidad. | Sí |
-| **C2** | La historia tiene un **ID único** (`HU-nn`) y está vinculada a **al menos un requisito funcional** (`RFnn`) documentado en `docs/requisitos.md`. | Sí |
-| **C3** | Está identificado el **rol que ejecuta** la funcionalidad (Administrador, Recepcionista, Instructor, Nutricionista o Alumno) y se verificó que ese rol tenga el permiso correspondiente en la matriz de roles. | Sí |
-| **C4** | Todo **valor de negocio** que aparezca en la historia está cuantificado y se aclara si es fijo o parametrizable. No se aceptan expresiones como "bastante tiempo", "muchos alumnos" o "un monto razonable". | Sí |
-| **C5** | Si la historia toca el **módulo de cuotas**, indica explícitamente qué modalidades de cobro contempla (mensual fija, por clase, combinada) y qué hace con las que no. | Cuando aplica |
-| **C6** | Si la historia toca la **planificación de actividades**, aclara su comportamiento respecto de la grilla activa y de las versiones anteriores. | Cuando aplica |
-| **C7** | Si la historia toca **datos sensibles** (módulo nutricional), declara qué roles acceden, qué roles quedan explícitamente excluidos y qué se registra en el log de auditoría. | Cuando aplica |
+| ID | Criterio | Qué problema evita | Obligatorio |
+|---|---|---|:---:|
+| **C1** | **Formato, beneficio y rol habilitado.** La historia está escrita como `Como <rol>, quiero <funcionalidad>, para <beneficio>`, el beneficio es un valor real del negocio y no una repetición de la funcionalidad, y ese rol tiene el permiso correspondiente en la matriz de `docs/requisitos.md`. | Historias que describen una pantalla sin decir para qué sirve, y funciones asignadas a un rol que después no puede ejecutarlas. Nos pasó con el **rol implícito**: la historia no decía quién la ejecutaba y asumimos que era la recepcionista. | Sí |
+| **C2** | **Identificación y trazabilidad.** Tiene ID único `HU-nn`, está vinculada al menos a un requisito funcional documentado, y si le corresponde un caso de uso, la referencia cruzada está registrada en los dos documentos. | Historias huérfanas de las que nadie sabe de qué requisito salieron, y requisitos que nadie implementa porque ninguna historia los reclama. En HU-05 este criterio detectó que el módulo nutricional no tenía caso de uso desarrollado. | Sí |
+| **C3** | **Valores de negocio cuantificados.** Todo valor que aparezca en la historia está cuantificado y se aclara si es fijo o parametrizable. No se aceptan "bastante tiempo", "muchos alumnos" ni "un monto razonable". | Programar un número que el cliente dijo al pasar. La directora definió el umbral de mora como *"son como 30 días, más o menos"*: sin este criterio se escribe 30 en el código y a los dos meses lo quiere cambiar. | Sí |
+| **C4** | **Reglas específicas del módulo declaradas.** Si la historia toca **cuotas**, indica qué modalidades de cobro contempla y qué hace con las que no. Si toca **planificación**, aclara su comportamiento frente a la grilla activa y a las versiones anteriores. Si toca **datos sensibles**, declara qué roles acceden, cuáles quedan excluidos y qué se registra en el log de auditoría. | Los tres agujeros que el relevamiento dejó a la vista: desarrollar el cobro pensando solo en la cuota mensual, perder el histórico de grillas al no versionarlas, y dejar el módulo nutricional accesible desde recepción. | Cuando aplica |
+| **C5** | **Criterios de aceptación verificables, con camino alternativo.** Mínimo tres, en lenguaje natural, verificables uno por uno, y al menos uno que cubra un camino alternativo o de error: qué pasa si el dato ya existe, si el alumno está de baja, si no hay resultados. | El criterio vago —"el sistema debe funcionar correctamente"— y las historias que solo describen el caso feliz. De pensar los caminos de error salió un comportamiento que no estaba en ningún RF: que el sistema avise explícitamente cuando no hay resultados. | Sí |
+| **C6** | **Entradas, salidas y pantalla definidas.** Están definidos los campos de entrada con su obligatoriedad, formato y mensaje de error; qué devuelve el sistema y qué confirmación recibe el usuario; y la pantalla asociada está descripta en `docs/diseño-ui.md`. | Descubrir en pleno desarrollo que nadie definió qué pasa al guardar. Dibujar la pantalla de registro de pago fue lo que nos hizo notar que no estaba definido qué monto sugiere el sistema para la modalidad combinada. | Sí |
+| **C7** | **Requisitos no funcionales aplicables declarados.** La historia indica qué requisitos no funcionales la condicionan y con qué valor verificable: tiempo de respuesta, cantidad de pasos, dispositivo desde el que se opera, accesibilidad, seguridad o auditoría. Si no la condiciona ninguno, se justifica. | Historias que cumplen funcionalmente y fracasan en el uso real. La restricción RE02 dice que si una operación requiere más pasos que en Excel, el diseño está mal: sin este criterio el cobro se desarrolla sin mirar el límite de cuatro pasos de RNF08, o la asistencia sin contemplar que se opera de pie desde una tablet (RE05, RNF07 y la sección 6 de `docs/diseño-ui.md`). | Sí |
+| **C8** | **Consistencia con el modelo, las decisiones y las dependencias.** Las entidades y atributos que la historia necesita existen en `docs/er-modelo.md`, o el cambio está identificado y acordado; la historia no contradice ninguna decisión registrada en `integrantes.md`; y las dependencias con otras historias están declaradas. | La contradicción silenciosa: una historia que asume un umbral distinto al decidido, o que necesita un atributo que el modelo no tiene. En HU-05 detectó que `SeguimientoNutricional` guardaba las medidas en un campo genérico. | Sí |
+| **C9** | **Viabilidad para el sprint.** Los seis criterios INVEST evaluados y documentados; la historia estimada y de un tamaño que entra en una sola iteración; los cuatro integrantes podemos explicarla con nuestras palabras; y no quedan preguntas abiertas dirigidas al cliente. | La **historia camuflada**: formato correcto, criterios de aceptación y hasta evaluación INVEST, pero imposible de estimar. Es exactamente lo que pasó con HU-05, que de haber entrado a un sprint se habría frenado el primer día. | Sí |
 
-### Bloque B — Especificación funcional
-
-| ID | Criterio | Obligatorio |
-|---|---|---|
-| **C8** | La historia tiene **criterios de aceptación** escritos en lenguaje natural, en forma de lista, verificables uno por uno. Mínimo tres. | Sí |
-| **C9** | Los criterios de aceptación contemplan **al menos un camino alternativo o de error** (qué pasa si el dato ya existe, si el alumno está de baja, si no hay resultados). | Sí |
-| **C10** | Están definidos los **campos de entrada** con sus validaciones: cuáles son obligatorios, qué formato tienen y qué mensaje se muestra si fallan. | Sí |
-| **C11** | Está definida la **información que el sistema devuelve** al usuario: qué se muestra en pantalla y qué confirmación recibe. | Sí |
-| **C12** | Existe un **boceto o descripción de la pantalla** asociada en `docs/diseño-ui.md`, aunque sea preliminar. | Sí |
-
-### Bloque C — Consistencia con el resto del análisis
-
-| ID | Criterio | Obligatorio |
-|---|---|---|
-| **C13** | Las **entidades y atributos** que la historia necesita existen en el modelo ER, o el cambio necesario está identificado y acordado. | Sí |
-| **C14** | Si la historia se corresponde con un **caso de uso**, la referencia cruzada está registrada en ambos documentos. | Cuando aplica |
-| **C15** | La historia **no contradice** ninguna decisión registrada en la tabla de decisiones de `integrantes.md`. Si la contradice, la decisión se revisó y se actualizó primero. | Sí |
-| **C16** | Las **dependencias** con otras historias están identificadas. Si depende de una historia que todavía no se desarrolló, se indica cuál y por qué. | Sí |
-
-### Bloque D — Viabilidad para el sprint
-
-| ID | Criterio | Obligatorio |
-|---|---|---|
-| **C17** | La historia cumple los **seis criterios INVEST** y esa evaluación está documentada. | Sí |
-| **C18** | La historia está **estimada** por el equipo y su tamaño **entra en una sola iteración**. Si no entra, se divide antes de aceptarla. | Sí |
-| **C19** | Los cuatro integrantes **entendemos la historia** y podemos explicarla con nuestras palabras sin volver a leerla. | Sí |
-| **C20** | No quedan **preguntas abiertas** dirigidas al cliente. Si quedan, la historia vuelve al backlog hasta obtener la respuesta. | Sí |
+> **Por qué nueve y no veinte.** La primera versión de esta DoR tenía veinte criterios. Funcionaba como documento pero no como herramienta: una checklist que no se puede recorrer en una reunión de refinamiento termina marcándose de memoria. Fusionamos los que preguntaban lo mismo desde distintos ángulos —las tres reglas de módulo en C4, las entradas y salidas en C6, y los cuatro de viabilidad en C9— y sumamos el de requisitos no funcionales, que no teníamos. Ninguna condición se perdió: cambió el agrupamiento, no la exigencia.
 
 ---
 
@@ -132,33 +108,15 @@ Esta es la versión corta que usamos en la reunión de refinamiento. Se copia co
 ```markdown
 ## Checklist DoR — HU-__
 
-### A. Negocio
-- [ ] C1  — Formato "Como... quiero... para..." con beneficio real
-- [ ] C2  — ID asignado y vinculada a RF documentado
-- [ ] C3  — Rol ejecutor identificado y con permiso en la matriz
-- [ ] C4  — Valores de negocio cuantificados (sin "más o menos")
-- [ ] C5  — Modalidades de cobro contempladas        (N/A si no aplica)
-- [ ] C6  — Comportamiento frente a la grilla activa (N/A si no aplica)
-- [ ] C7  — Acceso a datos sensibles declarado       (N/A si no aplica)
-
-### B. Especificación
-- [ ] C8  — Mínimo 3 criterios de aceptación verificables
-- [ ] C9  — Al menos un camino alternativo o de error
-- [ ] C10 — Campos, obligatoriedad y validaciones definidos
-- [ ] C11 — Salida e información al usuario definida
-- [ ] C12 — Pantalla descripta en docs/diseño-ui.md
-
-### C. Consistencia
-- [ ] C13 — Entidades y atributos existen en el modelo ER
-- [ ] C14 — Referencia cruzada con caso de uso        (N/A si no aplica)
-- [ ] C15 — No contradice decisiones registradas
-- [ ] C16 — Dependencias identificadas
-
-### D. Viabilidad
-- [ ] C17 — INVEST evaluado y documentado
-- [ ] C18 — Estimada y entra en una iteración
-- [ ] C19 — Los cuatro la entendemos
-- [ ] C20 — Sin preguntas abiertas al cliente
+- [ ] C1 — Formato "Como... quiero... para...", beneficio real y rol con permiso
+- [ ] C2 — ID asignado, vinculada a RF y referencia cruzada con el caso de uso
+- [ ] C3 — Valores de negocio cuantificados (sin "más o menos")
+- [ ] C4 — Reglas del módulo declaradas: cuotas, grilla o datos sensibles   (N/A justificado)
+- [ ] C5 — Mínimo 3 criterios de aceptación verificables, con un camino alternativo
+- [ ] C6 — Campos, validaciones, salida al usuario y pantalla documentada
+- [ ] C7 — Requisitos no funcionales aplicables declarados, con valor verificable
+- [ ] C8 — Consistente con el modelo ER y las decisiones; dependencias declaradas
+- [ ] C9 — INVEST evaluado, estimada, comprendida por los cuatro y sin preguntas abiertas
 
 **Resultado:** [ ] Ready   [ ] Ready con observaciones   [ ] No Ready
 **Evaluada el:** __/__/2026
@@ -171,7 +129,7 @@ Esta es la versión corta que usamos en la reunión de refinamiento. Se copia co
 
 | Resultado | Condición | Qué pasa |
 |---|---|---|
-| **Ready** | Cumple los 20 criterios (contando como cumplidos los N/A justificados). | Entra al sprint. |
+| **Ready** | Cumple los nueve criterios, contando como cumplidos los N/A justificados. | Entra al sprint. |
 | **Ready con observaciones** | Cumple todos los obligatorios, pero hay un punto menor a resolver que no bloquea el desarrollo. | Entra al sprint con la observación anotada y un responsable de resolverla. |
 | **No Ready** | Falla al menos un criterio obligatorio. | Vuelve al backlog. Se anota qué falta y quién lo resuelve. **No se negocia el ingreso.** |
 
@@ -189,26 +147,15 @@ Aplicamos la DoR a tres historias que escribimos nosotros mismos. La idea de est
 
 | ID | Criterio | Estado | Justificación |
 |---|---|:---:|---|
-| C1 | Formato y beneficio | Cumple | El beneficio ("padrón centralizado que evite duplicados") es un problema real relevado (P6). |
-| C2 | ID y vínculo con RF | Cumple | HU-01 → RF01, RF02. |
-| C3 | Rol ejecutor | Cumple | Recepcionista. También lo puede hacer el Administrador. |
-| C4 | Valores cuantificados | Cumple | No hay valores numéricos de negocio en juego. |
-| C5 | Modalidades de cobro | Cumple | Contempla las tres: se selecciona la modalidad en el alta. |
-| C6 | Grilla | N/A | N/A. |
-| C7 | Datos sensibles | N/A | N/A. Datos personales comunes, no de salud. |
-| C8 | Criterios de aceptación | Cumple | Cinco criterios verificables. |
-| C9 | Camino alternativo | Cumple | DNI duplicado y campos obligatorios vacíos. |
-| C10 | Campos y validaciones | Cumple | Nombre, apellido, DNI, teléfono, email, actividad. DNI único. |
-| C11 | Salida al usuario | Cumple | Número de legajo asignado y mensaje de confirmación. |
-| C12 | Pantalla | Cumple | "Alta de alumno", documentada en `docs/diseño-ui.md`. |
-| C13 | Entidades | Cumple | `Alumno` y `ModalidadCobro` existen en el modelo. |
-| C14 | Caso de uso | Cumple | CU-01. |
-| C15 | Decisiones | Cumple | No contradice ninguna. |
-| C16 | Dependencias | Cumple | Ninguna. Es el punto de entrada del sistema. |
-| C17 | INVEST | Cumple | Los seis criterios se cumplen. |
-| C18 | Estimación | Cumple | Estimada como historia chica. Entra holgada en una iteración. |
-| C19 | Comprensión | Cumple | Los cuatro la explicamos sin releerla. |
-| C20 | Preguntas abiertas | Cumple | Ninguna. |
+| C1 | Formato, beneficio y rol | Cumple | El beneficio ("padrón centralizado que evite duplicados") es un problema real relevado (P6). La ejecuta la Recepcionista, y también el Administrador; ambos tienen el permiso en la matriz. |
+| C2 | Identificación y trazabilidad | Cumple | HU-01 → RF01, RF02. Caso de uso CU-01, referenciado en los dos documentos. |
+| C3 | Valores cuantificados | Cumple | No hay valores numéricos de negocio en juego. |
+| C4 | Reglas del módulo | Cumple | Contempla las tres modalidades de cobro: se selecciona en el alta. No toca grilla ni datos sensibles. |
+| C5 | Criterios de aceptación | Cumple | Cinco criterios verificables, con DNI duplicado y campos obligatorios vacíos como caminos de error. |
+| C6 | Entradas, salidas y pantalla | Cumple | Apellido, nombre, DNI, teléfono, email y actividad, con DNI único. Devuelve el legajo asignado y un mensaje de confirmación. Pantalla P04, documentada. |
+| C7 | Requisitos no funcionales | Cumple | RNF09: los mensajes de DNI duplicado y de campos faltantes nombran el campo e indican la acción. RNF03 para el permiso del rol. No la condiciona ningún límite de tiempo ni de pasos. |
+| C8 | Consistencia y dependencias | Cumple | `Alumno`, `Tutor` y `ModalidadCobro` existen en el modelo. No contradice ninguna decisión. Sin dependencias: es el punto de entrada del sistema. |
+| C9 | Viabilidad | Cumple | Los seis criterios INVEST se cumplen. Estimada como historia chica, entra holgada en una iteración. Los cuatro la explicamos sin releerla. Sin preguntas abiertas. |
 
 **Resultado: READY**
 
@@ -222,26 +169,15 @@ Aplicamos la DoR a tres historias que escribimos nosotros mismos. La idea de est
 
 | ID | Criterio | Estado | Justificación |
 |---|---|:---:|---|
-| C1 | Formato y beneficio | Cumple | Beneficio claro: acción de cobranza e impacto financiero. |
-| C2 | ID y vínculo con RF | Cumple | HU-03 → RF08, RF09. |
-| C3 | Rol ejecutor | Cumple | Administrador (directora). |
-| C4 | Valores cuantificados | Cumple | 30 días de mora, definido como parámetro configurable (decisión D6). |
-| C5 | Modalidades de cobro | Observación | **Observación:** el cálculo de mora para la modalidad "por clase" no está definido. Un alumno que paga por clase y no viene hace 40 días, ¿es moroso o simplemente no asistió? |
-| C6 | Grilla | N/A | N/A. |
-| C7 | Datos sensibles | N/A | N/A. |
-| C8 | Criterios de aceptación | Cumple | Cinco criterios. |
-| C9 | Camino alternativo | Cumple | Caso "sin alumnos morosos" contemplado explícitamente. |
-| C10 | Campos y validaciones | Cumple | Filtros por actividad y turno. |
-| C11 | Salida al usuario | Cumple | Nombre, actividad, días de mora, monto adeudado. Exportable a PDF. |
-| C12 | Pantalla | Cumple | "Alumnos morosos", documentada en `docs/diseño-ui.md`. |
-| C13 | Entidades | Cumple | `Alumno`, `Cuota` y `ModalidadCobro`. |
-| C14 | Caso de uso | Cumple | CU-03. |
-| C15 | Decisiones | Cumple | Consistente con D6. |
-| C16 | Dependencias | Cumple | Depende de HU-02 (registrar pago): sin pagos cargados no hay mora que calcular. Está declarado. |
-| C17 | INVEST | Cumple | Documentado. |
-| C18 | Estimación | Cumple | Historia mediana. Entra en una iteración. |
-| C19 | Comprensión | Cumple | Sí. |
-| C20 | Preguntas abiertas | Observación | La duda de C5 es una pregunta para la dirección de Vitalis. |
+| C1 | Formato, beneficio y rol | Cumple | Beneficio claro: acción de cobranza e impacto financiero. La ejecuta el Administrador, con permiso total sobre el reporte. |
+| C2 | Identificación y trazabilidad | Cumple | HU-03 → RF08, RF09. Caso de uso CU-03. |
+| C3 | Valores cuantificados | Cumple | 30 días de mora, definido como parámetro configurable (decisión D6). |
+| C4 | Reglas del módulo | Observación | **Observación:** el cálculo de mora para la modalidad "por clase" no está definido. Un alumno que paga por clase y no viene hace 40 días, ¿es moroso o simplemente no asistió? |
+| C5 | Criterios de aceptación | Cumple | Cinco criterios. El caso "sin alumnos morosos" está contemplado explícitamente como situación normal. |
+| C6 | Entradas, salidas y pantalla | Cumple | Filtros por actividad y turno. Devuelve nombre, actividad, días de mora y monto adeudado, exportable a PDF. Pantalla P08, documentada. |
+| C7 | Requisitos no funcionales | Cumple | RNF09 para el mensaje del listado vacío. RNF03: la Recepcionista accede en modo consulta y no puede modificar el umbral, que es atribución del Administrador (RF30). |
+| C8 | Consistencia y dependencias | Cumple | `Alumno`, `Cuota` y `ModalidadCobro`. Consistente con D6. Depende de HU-02: sin pagos cargados no hay mora que calcular. Está declarado. |
+| C9 | Viabilidad | Observación | INVEST documentado. Historia mediana, entra en una iteración. **Observación:** la duda de C4 es una pregunta abierta para la dirección de Vitalis. |
 
 **Resultado: READY CON OBSERVACIONES**
 
@@ -257,26 +193,15 @@ Aplicamos la DoR a tres historias que escribimos nosotros mismos. La idea de est
 
 | ID | Criterio | Estado | Justificación |
 |---|---|:---:|---|
-| C1 | Formato y beneficio | Cumple | Beneficio claro. |
-| C2 | ID y vínculo con RF | Cumple | HU-05 → RF19, RF20, RF21. |
-| C3 | Rol ejecutor | Cumple | Nutricionista. |
-| C4 | Valores cuantificados | No cumple | **No cumple.** "Medidas" no está definido. ¿Cuáles? ¿Cintura, cadera, brazo? ¿Todas obligatorias? ¿En qué unidad? Sin esto no se puede diseñar el formulario. |
-| C5 | Modalidades de cobro | N/A | N/A. |
-| C6 | Grilla | N/A | N/A. |
-| C7 | Datos sensibles | Observación | Declara que recepcionistas e instructores no acceden, pero **no define** si el alumno-paciente puede ver su propio historial, ni qué pasa con el consentimiento para registrar datos de salud de un menor. |
-| C8 | Criterios de aceptación | Cumple | Cinco criterios. |
-| C9 | Camino alternativo | Cumple | Acceso denegado para otros roles. |
-| C10 | Campos y validaciones | No cumple | **No cumple.** Derivado de C4: no se pueden definir validaciones de campos que no están definidos. |
-| C11 | Salida al usuario | Cumple | Historial completo del paciente. |
-| C12 | Pantalla | Cumple | "Módulo nutricional", documentada en `docs/diseño-ui.md`. |
-| C13 | Entidades | Observación | `SeguimientoNutricional` tiene `medidas : varchar`, que es un campo genérico. Si las medidas se definen como campos separados, el modelo cambia. |
-| C14 | Caso de uso | No cumple | **No cumple.** No hay un caso de uso desarrollado para el módulo nutricional. |
-| C15 | Decisiones | Cumple | No contradice ninguna. |
-| C16 | Dependencias | Cumple | Depende del módulo de usuarios y roles. Declarado. |
-| C17 | INVEST | Observación | La propia evaluación INVEST marca "Pequeña: Parcial" — la historia agrupa registrar y consultar, que son dos cosas distintas. |
-| C18 | Estimación | No cumple | **No cumple.** No se puede estimar sin saber cuántos campos tiene el formulario. |
-| C19 | Comprensión | Cumple | La entendemos, pero entendemos también que está incompleta. |
-| C20 | Preguntas abiertas | No cumple | **No cumple.** Quedan tres preguntas abiertas para la nutricionista. |
+| C1 | Formato, beneficio y rol | Cumple | Beneficio claro. La ejecuta la Nutricionista, con acceso exclusivo al módulo. |
+| C2 | Identificación y trazabilidad | No cumple | HU-05 → RF19, RF20, RF21. **No cumple:** no hay un caso de uso desarrollado para el módulo nutricional, de modo que la referencia cruzada no existe. |
+| C3 | Valores cuantificados | No cumple | **No cumple.** "Medidas" no está definido. ¿Cuáles? ¿Cintura, cadera, brazo? ¿Todas obligatorias? ¿En qué unidad? Sin esto no se puede diseñar el formulario. |
+| C4 | Reglas del módulo | Observación | Declara que recepcionistas e instructores no acceden, pero **no define** si el alumno-paciente puede ver su propio historial, ni qué pasa con el consentimiento para registrar datos de salud de un menor. |
+| C5 | Criterios de aceptación | Cumple | Cinco criterios, con el acceso denegado para otros roles como camino alternativo. |
+| C6 | Entradas, salidas y pantalla | No cumple | **No cumple.** Derivado de C3: no se pueden definir validaciones de campos que no están definidos. La salida (historial completo del paciente) y la pantalla sí están. |
+| C7 | Requisitos no funcionales | Observación | Declara el aislamiento del módulo que exige RNF06, pero **no declara** qué se registra en el log de auditoría cuando alguien intenta entrar sin permiso, que es lo que pide RNF05 para una operación sensible. |
+| C8 | Consistencia y dependencias | Observación | `SeguimientoNutricional` tiene `medidas : varchar`, que es un campo genérico: si las medidas se definen como campos separados, el modelo cambia. Depende del módulo de usuarios y roles, y está declarado. |
+| C9 | Viabilidad | No cumple | **No cumple.** No se puede estimar sin saber cuántos campos tiene el formulario. La evaluación INVEST marca "Pequeña: Parcial", porque la historia agrupa registrar y consultar. Quedan tres preguntas abiertas para la nutricionista. |
 
 **Resultado: NO READY**
 
@@ -291,9 +216,9 @@ Aplicamos la DoR a tres historias que escribimos nosotros mismos. La idea de est
 | 5 | Desarrollar el caso de uso correspondiente. | Equipo |
 | 6 | **Dividir la historia** en HU-05a (registrar consulta) y HU-05b (consultar historial). | Equipo |
 
-**Comentario del equipo:** esta historia es el mejor ejemplo de por qué escribimos la DoR. Leída rápido parece completa —tiene formato correcto, criterios de aceptación y evaluación INVEST— pero al pasarla por el checklist aparecen seis cosas sin resolver, cuatro de ellas bloqueantes. Si hubiera entrado a un sprint, se habría frenado el primer día.
+**Comentario del equipo:** esta historia es el mejor ejemplo de por qué escribimos la DoR. Leída rápido parece completa —tiene formato correcto, criterios de aceptación y evaluación INVEST— pero al pasarla por el checklist aparecen siete cosas sin resolver, cuatro de ellas bloqueantes. Si hubiera entrado a un sprint, se habría frenado el primer día.
 
-**Actualización posterior.** Las seis acciones correctivas se completaron. Los parámetros de la consulta quedaron definidos en la regla RN26 (decisión D11), lo que resolvió C4, C10, C13 y habilitó la estimación exigida por C18. El acceso del alumno a su historial se definió en RN28 (D13) y el consentimiento de menores en RN27 (D14), cerrando C7 y C20. La historia se dividió en HU-05a y HU-05b, con lo que C17 pasa a cumplirse plenamente. Ambas historias fueron reevaluadas con resultado **READY** e ingresaron al plan de entrega. El registro original de esta evaluación se conserva sin modificar, porque documenta el estado real de la historia en el momento del refinamiento.
+**Actualización posterior.** Las seis acciones correctivas se completaron. Los parámetros de la consulta quedaron definidos en la regla RN26 (decisión D11), lo que resolvió C3 y C6 y habilitó la estimación que exige C9. El acceso del alumno a su historial se definió en RN28 (D13) y el consentimiento de menores en RN27 (D14), cerrando C4. El registro de los intentos de acceso quedó cubierto por RN23, lo que cierra C7, y el ajuste del modelo descripto en el cambio C5 de `docs/er-modelo.md` cierra C8. Se desarrollaron los casos de uso CU-13 y CU-14, con lo que C2 pasa a cumplirse. La historia se dividió en HU-05a y HU-05b, y con esa división la evaluación INVEST de C9 se cumple plenamente. Ambas historias fueron reevaluadas con resultado **READY** e ingresaron al plan de entrega. El registro original de esta evaluación se conserva sin modificar, porque documenta el estado real de la historia en el momento del refinamiento.
 
 ---
 
@@ -303,7 +228,7 @@ Aplicamos la DoR a tres historias que escribimos nosotros mismos. La idea de est
 |---|---|---|
 | HU-01 — Registrar alumno | Ready | 0 |
 | HU-03 — Consultar morosos | Ready con observaciones | 0 bloqueantes, 2 observaciones |
-| HU-05 — Registrar consulta nutricional | No Ready | 5 bloqueantes, 3 observaciones |
+| HU-05 — Registrar consulta nutricional | No Ready | 4 bloqueantes, 3 observaciones |
 
 **Tasa de aprobación: 1 de 3 sin observaciones.** Es un resultado esperable para un backlog en etapa temprana y confirma que el filtro funciona.
 
@@ -354,6 +279,8 @@ Evaluación colectiva realizada al cierre de la primera iteración documental.
 | Cuando una historia se divide, las partes conservan la trazabilidad al RF original. | Se verifica en la revisión del PR. |
 
 ### 8.4 — Cómo nos calificamos
+
+> Los valores de esta tabla corresponden al cierre de la primera iteración documental, en mayo de 2026. A la fecha el backlog tiene 24 historias y el documento de requisitos llega a RF31.
 
 | Dimensión | Nivel | Fundamento |
 |---|---|---|
@@ -418,14 +345,15 @@ Situaciones que nos pasaron a nosotros y que la DoR está diseñada para evitar.
 
 | Anti-patrón | Cómo se ve | Criterio que lo bloquea |
 |---|---|---|
-| **Historia camuflada** | Parece completa porque tiene formato correcto, pero cuando la mirás en detalle no se puede estimar. (Caso HU-05.) | C18, C20 |
+| **Historia camuflada** | Parece completa porque tiene formato correcto, pero cuando la mirás en detalle no se puede estimar. (Caso HU-05.) | C9 |
 | **Requisito con "y"** | "El sistema debe registrar el pago y actualizar el estado de cuenta." Son dos requisitos. | C2 |
-| **Valor no cuantificado** | "Más de 30 días, más o menos." | C4 |
-| **Rol implícito** | La historia no dice quién la ejecuta y se asume que es la recepcionista. | C3 |
-| **Épica disfrazada** | "Gestionar alumnos" presentado como una sola historia. | C18 |
-| **Criterio de aceptación vago** | "El sistema debe funcionar correctamente." | C8 |
-| **Historia sin camino de error** | Solo se describe el caso feliz. | C9 |
-| **Contradicción silenciosa** | Una historia asume un umbral de mora distinto al registrado en las decisiones. | C15 |
+| **Valor no cuantificado** | "Más de 30 días, más o menos." | C3 |
+| **Rol implícito** | La historia no dice quién la ejecuta y se asume que es la recepcionista. | C1 |
+| **Épica disfrazada** | "Gestionar alumnos" presentado como una sola historia. | C9 |
+| **Criterio de aceptación vago** | "El sistema debe funcionar correctamente." | C5 |
+| **Historia sin camino de error** | Solo se describe el caso feliz. | C5 |
+| **Requisito no funcional ignorado** | La historia funciona pero suma pasos respecto de la planilla, o no se puede operar desde la tablet del salón. | C7 |
+| **Contradicción silenciosa** | Una historia asume un umbral de mora distinto al registrado en las decisiones. | C8 |
 
 ---
 
@@ -481,6 +409,7 @@ Nuestra Definition of Done para esta etapa documental es:
 |---|---|---|
 | 1.0 | 05/2026 | Versión inicial. 20 criterios en cuatro bloques, aplicados a HU-01, HU-03 y HU-05. |
 | 1.1 | 05/2026 | Registro del cierre de las acciones correctivas de HU-03 y HU-05. Las evaluaciones originales se conservan sin modificar. |
+| 1.2 | 10/2026 | La checklist pasa de 20 criterios a 9. Se fusionan los que preguntaban lo mismo desde distintos ángulos y se incorpora C7, sobre requisitos no funcionales, que no existía. Cada criterio declara qué problema evita. Las tres evaluaciones de la sección 7 se reexpresan contra los criterios nuevos conservando todos los hallazgos originales. |
 
 ---
 
