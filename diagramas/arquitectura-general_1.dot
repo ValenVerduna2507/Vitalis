@@ -1,0 +1,299 @@
+/* ============================================================
+   Diagrama General de Arquitectura
+   Sistema de Gestion Integral - Vitalis Centro de Entrenamiento
+   Escuela Superior de Comercio N 49 "Justo Jose de Urquiza"
+   Grupo 02 - Desarrollo Web / Analista Funcional de Sistemas
+
+   Documentacion asociada:
+     docs/requisitos.md      seccion 9.4  arquitectura prevista
+                             seccion 10   roles y permisos
+     docs/diseño-ui.md       las 19 pantallas
+     docs/er-modelo.md       las 18 entidades
+     docs/casos-de-uso.md    los 17 casos de uso
+
+   Alcance: vista general del sistema. No reemplaza al diagrama
+   de casos de uso ni al modelo entidad-relacion: los integra en
+   una sola lectura.
+
+   Este diagrama esta escrito en Graphviz DOT y no en PlantUML
+   porque requiere control explicito del apilado por capas.
+   Los diagramas UML del repositorio (casos-de-uso.puml y
+   er.puml) se mantienen en PlantUML.
+
+   Generar la imagen:
+     dot -Tpng arquitectura-general.dot -o arquitectura-general.png
+     dot -Tsvg arquitectura-general.dot -o arquitectura-general.svg
+   ============================================================ */
+
+digraph arquitectura_general {
+
+  /* ---------- configuracion general ---------- */
+  compound   = true;
+  rankdir    = TB;
+  bgcolor    = "white";
+  splines    = ortho;
+  nodesep    = 0.35;
+  ranksep    = 0.75;
+  fontname   = "Helvetica";
+  fontsize   = 20;
+  labelloc   = "t";
+  label      = <<b>Diagrama General de Arquitectura</b><br/>Sistema de Gestión Integral — Vitalis Centro de Entrenamiento<br/><font point-size="12">Grupo 02 — Desarrollo Web · Escuela Superior de Comercio N° 49 "Justo José de Urquiza"</font><br/> >;
+
+  node [ shape     = box,
+         style     = "rounded,filled",
+         fillcolor = "#F2F5FA",
+         color     = "#4A6FA5",
+         fontname  = "Helvetica",
+         fontsize  = 11,
+         fontcolor = "#1A1A1A",
+         margin    = "0.16,0.10" ];
+
+  edge [ color     = "#1F3864",
+         fontname  = "Helvetica",
+         fontsize  = 10,
+         fontcolor = "#1F3864",
+         penwidth  = 1.2 ];
+
+  /* ============================================================
+     CAPA 1 - USUARIOS Y ROLES
+     ============================================================ */
+  subgraph cluster_1 {
+    label     = <<b>1 · Usuarios y roles</b>  <font point-size="10">(docs/requisitos.md, sección 10)</font>>;
+    fontsize  = 13;
+    fontcolor = "#1F3864";
+    color     = "#1F3864";
+    penwidth  = 1.4;
+    style     = "rounded";
+    margin    = 14;
+
+    node [ shape = box, style = "rounded,filled", fillcolor = "#FFFFFF" ];
+
+    U_ADM [ label = <<b>Administrador</b><br/>Dirección<br/><font point-size="9" color="#5A5A5A">acceso total</font>> ];
+    U_REC [ label = <<b>Recepcionista</b><br/>Mostrador<br/><font point-size="9" color="#5A5A5A">operación diaria</font>> ];
+    U_INS [ label = <<b>Instructor</b><br/>Salón<br/><font point-size="9" color="#5A5A5A">sólo sus clases</font>> ];
+    U_NUT [ label = <<b>Nutricionista</b><br/>Consultorio<br/><font point-size="9" color="#5A5A5A">sólo sus pacientes</font>> ];
+    U_ALU [ label = <<b>Alumno</b><br/>Autogestión<br/><font point-size="9" color="#5A5A5A">sólo consulta propia</font>> ];
+
+    /* orden de izquierda a derecha */
+    { rank = same; U_ADM -> U_REC -> U_INS -> U_NUT -> U_ALU [ style = invis ]; }
+  }
+
+  /* ============================================================
+     CAPA 2 - PUESTOS DE ACCESO
+     ============================================================ */
+  subgraph cluster_2 {
+    label     = <<b>2 · Puestos de acceso</b>>;
+    fontsize  = 13;
+    fontcolor = "#1F3864";
+    color     = "#1F3864";
+    penwidth  = 1.4;
+    style     = "rounded";
+    margin    = 14;
+
+    node [ fillcolor = "#EEF2F9" ];
+
+    D_DIR [ label = <Equipo de dirección<br/>y consultorio> ];
+    D_PC  [ label = <PC de mostrador<br/>Recepción> ];
+    D_TAB [ label = <Tablet del salón<br/><font point-size="9" color="#5A5A5A">wifi del establecimiento · RE05</font>> ];
+    D_MOV [ label = <Teléfono o tablet<br/>del alumno> ];
+
+    { rank = same; D_DIR -> D_PC -> D_TAB -> D_MOV [ style = invis ]; }
+  }
+
+  /* ============================================================
+     CAPA 3 - PRESENTACION
+     ============================================================ */
+  subgraph cluster_3 {
+    label     = <<b>3 · Capa de presentación — Web App responsiva</b>  <font point-size="10">(RE06, RNF07) · 19 pantallas · docs/diseño-ui.md</font>>;
+    fontsize  = 13;
+    fontcolor = "#1F3864";
+    color     = "#1F3864";
+    penwidth  = 1.4;
+    style     = "rounded";
+    margin    = 14;
+
+    P_COM [ label = <<b>Comunes</b><br align="left"/><font point-size="10">P01 Login<br align="left"/>P02 Dashboard<br align="left"/></font>> ];
+    P_ALU [ label = <<b>Alumnos y cobros</b><br align="left"/><font point-size="10">P03 Gestión de alumnos<br align="left"/>P04 Alta de alumno<br align="left"/>P05 Ficha del alumno<br align="left"/>P06 Registro de pago<br align="left"/>P07 Historial de pagos<br align="left"/>P08 Alumnos morosos<br align="left"/></font>> ];
+    P_ACT [ label = <<b>Actividades y asistencia</b><br align="left"/><font point-size="10">P09 Clases y grillas<br align="left"/>P10 Inscripción a clases<br align="left"/>P11 Gestión de instructores<br align="left"/>P12 Agenda del instructor<br align="left"/>P13 Control de asistencia<br align="left"/></font>> ];
+    P_NUT [ label = <<b>Nutricional</b><br align="left"/><font point-size="10">P14 Consultorio nutricional<br align="left"/>P15 Historial de evolución<br align="left"/></font>> ];
+    P_ADM [ label = <<b>Administración</b><br align="left"/><font point-size="10">P16 Reportes<br align="left"/>P17 Usuarios y roles<br align="left"/>P18 Parámetros del sistema<br align="left"/></font>> ];
+    P_POR [ label = <<b>Autogestión</b><br align="left"/><font point-size="10">P19 Portal del alumno<br align="left"/></font>> ];
+
+    { rank = same; P_COM -> P_ALU -> P_ACT -> P_NUT -> P_ADM -> P_POR [ style = invis ]; }
+  }
+
+  /* ============================================================
+     CAPA 4 - APLICACION (BACK-END)
+     ============================================================ */
+  subgraph cluster_4 {
+    label     = <<b>4 · Capa de aplicación — Back-end</b>  <font point-size="10">Toda la lógica de negocio: RF01 a RF31 y RN01 a RN29</font>>;
+    fontsize  = 13;
+    fontcolor = "#1F3864";
+    color     = "#1F3864";
+    penwidth  = 1.4;
+    style     = "rounded";
+    margin    = 14;
+
+    /* ---- 4.a servicios transversales ---- */
+    subgraph cluster_4a {
+      label     = <<b>4.a · Servicios transversales</b>>;
+      fontsize  = 11;
+      fontcolor = "#4A6FA5";
+      color     = "#9AB0CE";
+      style     = "rounded";
+      margin    = 12;
+
+      node [ fillcolor = "#E7EEF8" ];
+
+      S_SEG [ label = <<b>Autenticación y control<br/>de acceso por rol</b><br/><font point-size="9" color="#5A5A5A">RF22, RF23, RNF03, RNF04</font>> ];
+      S_RN  [ label = <<b>Motor de reglas<br/>de negocio</b><br/><font point-size="9" color="#5A5A5A">RN01 a RN29</font>> ];
+      S_CAL [ label = <<b>Cálculo de datos<br/>derivados y reportes</b><br/><font point-size="9" color="#5A5A5A">RF08, RF28, RF29</font>> ];
+      S_AUD [ label = <<b>Registro de auditoría</b><br/><font point-size="9" color="#5A5A5A">RF31, RNF05, RN23</font>> ];
+
+      { rank = same; S_SEG -> S_RN -> S_CAL -> S_AUD [ style = invis ]; }
+    }
+
+    /* ---- 4.b modulos funcionales ---- */
+    subgraph cluster_4b {
+      label     = <<b>4.b · Módulos funcionales</b>  <font point-size="10">8 módulos · 31 requisitos funcionales</font>>;
+      fontsize  = 11;
+      fontcolor = "#4A6FA5";
+      color     = "#9AB0CE";
+      style     = "rounded";
+      margin    = 12;
+
+      M1 [ label = <<b>M1 · Gestión de alumnos</b><br/><font point-size="9" color="#5A5A5A">RF01 a RF05, RF24<br/>6 requisitos</font>> ];
+      M2 [ label = <<b>M2 · Cuotas y pagos</b><br/><font point-size="9" color="#5A5A5A">RF06 a RF10, RF30<br/>6 requisitos</font>> ];
+      M3 [ label = <<b>M3 · Planificación<br/>de actividades</b><br/><font point-size="9" color="#5A5A5A">RF11 a RF14<br/>4 requisitos</font>> ];
+      M4 [ label = <<b>M4 · Control de asistencia</b><br/><font point-size="9" color="#5A5A5A">RF15 a RF18, RF27<br/>5 requisitos</font>> ];
+      M5 [ label = <<b>M5 · Seguimiento<br/>nutricional</b><br/><font point-size="9" color="#5A5A5A">RF19 a RF21<br/>3 requisitos</font>> ];
+      M6 [ label = <<b>M6 · Gestión<br/>de instructores</b><br/><font point-size="9" color="#5A5A5A">RF25, RF26<br/>2 requisitos</font>> ];
+      M7 [ label = <<b>M7 · Seguridad,<br/>usuarios y roles</b><br/><font point-size="9" color="#5A5A5A">RF22, RF23, RF31<br/>3 requisitos</font>> ];
+      M8 [ label = <<b>M8 · Reportes de gestión</b><br/><font point-size="9" color="#5A5A5A">RF28, RF29<br/>2 requisitos</font>> ];
+
+      /* dos filas de cuatro */
+      M1 -> M5 [ style = invis ];
+      M2 -> M6 [ style = invis ];
+      M3 -> M7 [ style = invis ];
+      M4 -> M8 [ style = invis ];
+
+      { rank = same; M1 -> M2 -> M3 -> M4 [ style = invis ]; }
+      { rank = same; M5 -> M6 -> M7 -> M8 [ style = invis ]; }
+    }
+
+    /* apila 4.a sobre 4.b */
+    S_SEG -> M1 [ style = invis ];
+    S_RN  -> M2 [ style = invis ];
+    S_CAL -> M3 [ style = invis ];
+    S_AUD -> M4 [ style = invis ];
+  }
+
+  /* ============================================================
+     CAPA 5 - DATOS
+     ============================================================ */
+  subgraph cluster_5 {
+    label     = <<b>5 · Capa de datos — PostgreSQL</b>  <font point-size="10">18 entidades · docs/er-modelo.md</font>>;
+    fontsize  = 13;
+    fontcolor = "#1F3864";
+    color     = "#1F3864";
+    penwidth  = 1.4;
+    style     = "rounded";
+    margin    = 14;
+
+    node [ shape = cylinder, style = filled, fillcolor = "#EEF2F9", margin = "0.18,0.12" ];
+
+    E1 [ label = <<b>M1</b><br/>Alumno · Tutor> ];
+    E2 [ label = <<b>M2</b><br/>Cuota<br/>ModalidadCobro> ];
+    E3 [ label = <<b>M3</b><br/>Disciplina · Clase<br/>Grilla · Inscripcion> ];
+    E4 [ label = <<b>M4</b><br/>Asistencia> ];
+    E5 [ label = <<b>M5</b><br/>Nutricionista · Paciente<br/>SeguimientoNutricional> ];
+    E6 [ label = <<b>M6</b><br/>Instructor<br/>InstructorEspecialidad> ];
+    E7 [ label = <<b>M7</b><br/>Usuario · Rol<br/>LogAuditoria<br/>ParametroSistema> ];
+
+    { rank = same; E1 -> E2 -> E3 -> E4 -> E5 -> E6 -> E7 [ style = invis ]; }
+  }
+
+  /* ============================================================
+     CAPA 6 - AUTOMATIZACION E INTEGRACION
+     ============================================================ */
+  subgraph cluster_6 {
+    label     = <<b>6 · Automatización e integración</b>  <font point-size="10">(RE11) · complementa al sistema, no lo reemplaza</font>>;
+    fontsize  = 13;
+    fontcolor = "#5A5A5A";
+    color     = "#8A8A8A";
+    penwidth  = 1.4;
+    style     = "rounded,dashed";
+    margin    = 14;
+
+    node [ fillcolor = "#F6F6F4", color = "#8A8A8A" ];
+
+    N8N [ label = <<b>n8n</b><br/>Motor de automatización>, shape = box3d, style = filled, fillcolor = "#EDEDE8" ];
+    FL1 [ label = <<b>Disparador programado</b><br/><font point-size="10">Clasificación diaria de alumnos<br/>morosos e inactivos</font><br/><font point-size="9" color="#5A5A5A">apoya RF08, RN09, RN25</font>> ];
+    FL2 [ label = <<b>Disparador programado</b><br/><font point-size="10">Envío periódico del reporte<br/>de morosidad e ingresos</font><br/><font point-size="9" color="#5A5A5A">apoya RF09, RF28</font>> ];
+    MAIL [ label = <Servicio de correo<br/>electrónico>, shape = ellipse, style = "filled,dashed", fillcolor = "#FAFAFA" ];
+
+    { rank = same; FL1 -> FL2 [ style = invis ]; }
+    N8N -> FL1 [ color = "#8A8A8A" ];
+    N8N -> FL2 [ color = "#8A8A8A" ];
+    FL2 -> MAIL [ color = "#8A8A8A", label = "entrega del\nresultado", fontcolor = "#5A5A5A" ];
+  }
+
+  /* ============================================================
+     NOTAS
+     ============================================================ */
+  subgraph cluster_notas {
+    label     = <<b>Notas</b>>;
+    fontsize  = 12;
+    fontcolor = "#7A6A2A";
+    color     = "#D8CE9A";
+    style     = "rounded";
+    margin    = 12;
+
+    node [ shape = note, style = filled, fillcolor = "#FFFDE7", color = "#C9BE86", fontsize = 10 ];
+
+    NOTA1 [ label = <<b>Dónde vive la lógica de negocio</b><br align="left"/>La interfaz no valida ni decide: sólo muestra y envía.<br align="left"/>Las reglas RN01 a RN29 y el control de acceso por rol<br align="left"/>se resuelven en el back-end. La matriz de permisos de<br align="left"/>docs/requisitos.md 10.2 define qué puede hacer cada<br align="left"/>uno de los cinco roles sobre cada funcionalidad.<br align="left"/>> ];
+    NOTA2 [ label = <<b>Qué hace y qué no hace n8n</b><br align="left"/>n8n define <b>cuándo</b> se ejecuta un proceso y <b>a quién</b><br align="left"/>se le entrega el resultado. No contiene lógica de negocio<br align="left"/>ni reemplaza al back-end. Ningún requisito funcional<br align="left"/>depende de n8n para cumplirse: si n8n no está disponible,<br align="left"/>la dirección obtiene la misma información desde P08.<br align="left"/>Ver docs/requisitos.md, sección 9.4.<br align="left"/>> ];
+    NOTA3 [ label = <<b>Fuera del alcance de la versión 1.0</b><br align="left"/>Pasarelas de pago y débito automático.<br align="left"/>Facturación electrónica.<br align="left"/>Comunicación masiva con alumnos.<br align="left"/>Aplicación móvil nativa.<br align="left"/>Control de acceso físico (molinetes, biometría).<br align="left"/>Gestión contable general y stock.<br align="left"/>> ];
+
+    { rank = same; NOTA1 -> NOTA2 -> NOTA3 [ style = invis ]; }
+  }
+
+  /* ============================================================
+     RELACIONES ENTRE CAPAS
+     ============================================================ */
+
+  /* usuarios -> puestos */
+  U_INS -> D_TAB [ ltail = cluster_1, lhead = cluster_2, penwidth = 1.6 ];
+
+  /* puestos -> presentacion */
+  D_TAB -> P_ACT [ ltail  = cluster_2,
+                   lhead  = cluster_3,
+                   penwidth = 1.6,
+                   label  = <  HTTPS desde el navegador<br align="left"/>  sin instalación local (RE06)<br align="left"/>> ];
+
+  /* presentacion -> back-end */
+  P_ACT -> S_RN [ ltail  = cluster_3,
+                  lhead  = cluster_4,
+                  penwidth = 1.6,
+                  label  = <  peticiones de la interfaz<br align="left"/>  respuestas filtradas por rol<br align="left"/>> ];
+
+  /* back-end -> datos */
+  M7 -> E4 [ ltail  = cluster_4,
+             lhead  = cluster_5,
+             penwidth = 1.6,
+             label  = <  lectura y escritura<br align="left"/>  del modelo de datos<br align="left"/>> ];
+
+  /* datos -> automatizacion (solo para apilar) */
+  E4 -> N8N [ style = invis ];
+
+  /* automatizacion -> back-end */
+  FL1 -> M4 [ lhead      = cluster_4,
+              color      = "#8A8A8A",
+              style      = dashed,
+              constraint = false,
+              fontcolor  = "#5A5A5A",
+              xlabel     = "consulta programada\lal back-end\l" ];
+
+  /* notas al pie */
+  MAIL -> NOTA2 [ style = invis ];
+}
