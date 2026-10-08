@@ -125,7 +125,7 @@ Todas las pantallas del sistema, salvo el login, comparten la misma estructura.
 > **Sobre la sección Reportes.** La Recepcionista accede a ella únicamente para
 > consultar el reporte de alumnos morosos (P08), conforme a la matriz de
 > permisos de `docs/requisitos.md` y al resumen de acceso por rol de la sección
-> 16 de este documento. No accede a P16 Reportes de gestión, ni puede modificar
+> 17 de este documento. No accede a P16 Reportes de gestión, ni puede modificar
 > el umbral de morosidad, que sigue siendo atribución del Administrador (RF30).
 
 ---
