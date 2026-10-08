@@ -2,7 +2,7 @@
 
 Sistema de Gestión Integral — Vitalis Centro de Entrenamiento
 Equipo: Grupo 02
-Versión: 1.3
+Versión: 1.4
 
 ---
 
@@ -212,7 +212,7 @@ No son una formalidad. Salen de cómo y dónde se usa este sistema:
 
 **Criterio adoptado.** El equipo toma como referencia las pautas **WCAG 2.1, nivel AA**. Este documento define lo que se puede decidir en la etapa de diseño funcional; lo que depende del marcado y de la paleta definitiva queda enunciado acá y se verifica en la implementación, según el apartado 6.6.
 
-> **Origen de estos criterios.** No derivan de un requisito no funcional: el relevamiento no planteó la accesibilidad y `docs/requisitos.md` no la cubre. El equipo los incorpora por decisión propia y propone sumarlos como **RNF14** en una próxima versión del documento de requisitos, para que queden sujetos a verificación como el resto.
+> **Origen de estos criterios.** No derivan del relevamiento: la accesibilidad no fue planteada por ningún actor. El equipo los incorpora por decisión propia (**D16**) y los formalizó como requisito **RNF14** en el apartado 7.6 de `docs/requisitos.md`, de modo que quedan sujetos a verificación como el resto de los requisitos no funcionales.
 
 ### 6.1 — Color y contraste
 
@@ -298,7 +298,7 @@ Este apartado desarrolla el principio 3 y la restricción RE05, que ya condicion
 | Tamaño de los objetivos táctiles | Medición sobre la tablet que efectivamente se usa en el salón. | Al entregar P13. |
 | Etiquetas asociadas y orden de foco | Inspección del marcado. | En la implementación. |
 
-**Lo que queda fuera de este documento.** La prueba con lectores de pantalla y la validación automática del marcado requieren la aplicación construida: no pueden resolverse en la etapa de diseño funcional. Quedan registradas como verificación pendiente para la etapa de implementación, junto con la incorporación del RNF14 propuesto al comienzo de esta sección.
+**Lo que queda fuera de este documento.** La prueba con lectores de pantalla y la validación automática del marcado requieren la aplicación construida: no pueden resolverse en la etapa de diseño funcional. Quedan registradas como verificación pendiente para la etapa de implementación, así como en el propio RNF14.
 
 ---
 
@@ -1612,6 +1612,7 @@ Cada parámetro muestra además quién lo modificó por última vez y cuándo.
 | 1.1 | 05/2026 | Incorporación del apartado de procesos automáticos sin pantalla y del principio de diseño 8, derivados de la arquitectura definida en la restricción RE11. Ninguna pantalla fue modificada. |
 | 1.2 | 09/2026 | Corrección de una inconsistencia interna: la tabla del menú por rol de la sección 3 negaba a la Recepcionista la sección Reportes, mientras que la matriz de permisos de `docs/requisitos.md` y el resumen de acceso por rol de la sección 17 de este documento le otorgan consulta sobre P08. Se habilita la sección en el menú, limitada a ese reporte. Ninguna pantalla fue modificada en su definición. |
 | 1.3 | 10/2026 | Incorporación de la sección 6, Accesibilidad, con los criterios de color y contraste, tamaño de texto, operación por teclado, controles táctiles y formularios, y su forma de verificación. Se agrega el principio de diseño 9 y se propone el requisito RNF14. Las secciones 6 a 16 pasan a numerarse 7 a 17. Ninguna pantalla fue modificada en su definición. |
+| 1.4 | 10/2026 | Los criterios de accesibilidad de la sección 6 dejan de estar propuestos y pasan a estar respaldados por el requisito RNF14, incorporado al apartado 7.6 de `docs/requisitos.md` (decisión D16). Se actualizan las dos referencias correspondientes. Ningún criterio fue modificado. |
 
 ---
 
