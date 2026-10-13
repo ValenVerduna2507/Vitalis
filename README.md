@@ -166,7 +166,7 @@ La etapa actual del trabajo es de **análisis y diseño funcional**, por lo que 
 | Wireframes | PlantUML Salt | Misma herramienta que el resto de los diagramas: texto plano, versionable y sin licencias. Ver [`diagramas/wireframes/README.md`](diagramas/wireframes/README.md). |
 | Diagrama de arquitectura | Graphviz (DOT) | Permite fijar el apilado por capas, que PlantUML no garantiza. |
 | Documentación | Markdown | Legible en GitHub y versionable. |
-| Control de versiones | Git + GitHub | Trabajo colaborativo con ramas y Pull Requests. |
+| Control de versiones | Git + GitHub | Historial completo de la documentación. El equipo trabaja directamente sobre `main` desde la interfaz web (decisión D17 en [`integrantes.md`](integrantes.md)). |
 | Gestión ágil | Tablero Kanban (GitHub Projects) | Seguimiento de historias de usuario y slices. |
 
 ### Arquitectura conceptual
@@ -361,14 +361,11 @@ El equipo trabaja de forma **horizontal**: los cuatro participan de todas las ac
 
 ## 13. Convenciones de trabajo
 
-### Ramas
+### Trabajo sobre el repositorio
 
-| Rama | Uso |
-|---|---|
-| `main` | Documentación estable y revisada. |
-| `docs/<tema>` | Redacción o modificación de documentación. |
-| `diagram/<tema>` | Creación o ajuste de diagramas. |
-| `fix/<tema>` | Corrección de errores o inconsistencias. |
+El equipo trabaja **directamente sobre `main`**, sin ramas intermedias ni Pull Requests. Cada integrante sube sus archivos desde la interfaz web de GitHub.
+
+La decisión está registrada como **D17** en [`integrantes.md`](integrantes.md), junto con qué controla la calidad en reemplazo de la revisión del Pull Request y qué se pierde al trabajar así. El flujo con ramas y Pull Requests está explicado en [`RECURSOS.md`](RECURSOS.md) como material de referencia del equipo, no como el procedimiento vigente.
 
 ### Mensajes de commit
 
@@ -388,7 +385,7 @@ Ejemplo:
 git commit -m "docs: agregar README del proyecto Vitalis"
 ```
 
-Todo cambio sobre `main` se integra mediante **Pull Request** con revisión de al menos un integrante. El procedimiento completo está en [`RECURSOS.md`](RECURSOS.md).
+Esta convención rige para los mensajes que el equipo redacta. Los que genera automáticamente la interfaz web de GitHub al subir, crear o borrar archivos —`Add files via upload`, `Create README.md`, `Delete ...`— no la siguen, y son una parte importante del historial: es la consecuencia directa de trabajar desde el navegador y no desde la línea de comandos.
 
 ### Identificadores
 
