@@ -6,6 +6,8 @@ Equipo: Grupo 02
 
 Este documento está pensado para alguien que **recién empieza con Git y GitHub**. Explica desde cómo instalar las herramientas hasta cómo resolver los problemas más comunes. Si algo no se entiende, es un error del documento: avisá en el grupo y lo corregimos.
 
+> **Cómo leer los apartados 6, 9 y 10.** El equipo trabaja directamente sobre `main`, desde la interfaz web de GitHub, sin ramas ni Pull Requests: así está registrado en la decisión D17 de [`integrantes.md`](integrantes.md). Los apartados sobre ramas, Pull Requests y el flujo completo de trabajo se conservan como **material de referencia**, no como el procedimiento vigente del equipo: explican cómo funciona la herramienta y qué haríamos distinto en un proyecto con código, donde dos personas sí editan el mismo archivo el mismo día.
+
 ---
 
 ## Índice
@@ -215,9 +217,11 @@ Si `git status` responde algo como `En la rama main / nada para hacer commit`, y
 
 Una **rama** (*branch*) es una línea de trabajo paralela. Te permite escribir un documento sin tocar la versión estable que está en `main`.
 
-### Por qué usamos ramas
+### Para qué sirven
 
-Si los cuatro editáramos `main` al mismo tiempo, cada `push` pisaría el trabajo del anterior. Con ramas, cada uno trabaja aislado y después integramos de forma ordenada.
+Si los cuatro editáramos `main` al mismo tiempo, cada `push` pisaría el trabajo del anterior. Con ramas, cada uno trabaja aislado y después se integra de forma ordenada.
+
+En este proyecto el riesgo es bajo, porque los documentos están repartidos por integrante y cada uno edita los suyos, de modo que el equipo trabaja sobre `main` (D17). Aun así hay un caso en el que el problema aparece igual: dos personas editando el mismo archivo desde la web con pocos minutos de diferencia. La segunda pisa a la primera y GitHub no avisa.
 
 ### Convención de nombres del proyecto
 
@@ -372,7 +376,7 @@ git pull origin main
 
 Un **Pull Request** (PR) es una propuesta de cambio: "revisen esto que hice y, si está bien, incorpórenlo a `main`".
 
-En este proyecto **todo cambio a `main` pasa por un PR**. Nadie hace push directo a `main`, ni siquiera el autor del documento.
+En este proyecto no se usan: el equipo sube los cambios directamente a `main` (D17). Lo que sigue explica cómo funcionan, para cuando haga falta.
 
 ### Cómo crear un Pull Request
 
@@ -439,7 +443,7 @@ git pull
 
 ## 10. Flujo completo de trabajo (de principio a fin)
 
-Este es el ciclo que repetís cada vez que te toca un documento.
+Este es el ciclo completo con ramas y Pull Requests, desde la línea de comandos. El equipo no lo usa —sube los archivos desde la web, directamente a `main`—, pero queda documentado como referencia.
 
 ```bash
 # 1. Pararte en main y actualizar
@@ -780,9 +784,9 @@ alumno ||--o{ cuota : "abona"
 
 | Notación | Significado |
 |---|---|
-| `||--||` | Uno a uno |
-| `||--o{` | Uno a muchos (el lado muchos puede ser cero) |
-| `||--|{` | Uno a muchos (el lado muchos es al menos uno) |
+| `\|\|--\|\|` | Uno a uno |
+| `\|\|--o{` | Uno a muchos (el lado muchos puede ser cero) |
+| `\|\|--\|{` | Uno a muchos (el lado muchos es al menos uno) |
 | `}o--o{` | Muchos a muchos |
 
 **Convenciones del proyecto:**
