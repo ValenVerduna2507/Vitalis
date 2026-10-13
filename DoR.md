@@ -289,7 +289,7 @@ Evaluación colectiva realizada al cierre de la primera iteración documental.
 | Cobertura del backlog | Medio | Cinco historias para 21 requisitos: falta ampliar. |
 | Consistencia entre documentos | Medio-Alto | Detectamos y resolvimos seis inconsistencias, pero las encontramos tarde. |
 | Aplicación de prácticas ágiles | Medio | Sabemos aplicar INVEST y DoR, pero es la primera vez que lo hacemos en un proyecto propio. |
-| Uso de Git y trabajo colaborativo | Medio | El flujo de ramas y PR funciona, aunque al principio hubo commits directos a `main`. |
+| Uso de Git y trabajo colaborativo | Bajo | Subimos todo directamente a `main` desde la interfaz web. Documentamos un flujo de ramas y Pull Requests que no llegamos a aplicar. |
 
 ---
 
@@ -328,7 +328,7 @@ Cada integrante evalúa su propio aporte, qué le costó y qué se compromete a 
 
 | | |
 |---|---|
-| **Qué aporté** | Redacté el `README.md`, `docs/diseño-ui.md` y los wireframes. Armé la estructura del repositorio y las convenciones de commits y ramas. |
+| **Qué aporté** | Redacté el `README.md`, `docs/diseño-ui.md` y los wireframes. Armé la estructura del repositorio y la convención de mensajes de commit. |
 | **Qué aprendí** | Que el diseño de interfaz es donde se descubren los agujeros del análisis. Al intentar dibujar la pantalla de registro de pago me di cuenta de que no estaba definido qué monto sugiere el sistema cuando el alumno tiene modalidad combinada. |
 | **Qué me costó** | Documentar pantallas sin adelantarme a decisiones visuales. Tuve que reescribir varias fichas que hablaban de colores y disposición en lugar de función. |
 | **Mi compromiso** | Documentar cada pantalla en términos de objetivo, acciones y validaciones, y dejar el diseño gráfico para la etapa de implementación. |
@@ -377,7 +377,7 @@ Backlog│    filtro   │  Sprint / desarrollo    │   filtro    │  Entregad
 | Cuándo se aplica | Antes de empezar. | Antes de dar por terminado. |
 | Qué pregunta | ¿Está lo suficientemente clara para empezar? | ¿Está lo suficientemente completa para entregar? |
 | Quién la usa | El equipo en el refinamiento. | El equipo en la revisión del sprint. |
-| Ejemplo en este proyecto | La historia tiene criterios de aceptación verificables. | El documento está aprobado en un PR y las referencias cruzadas están actualizadas. |
+| Ejemplo en este proyecto | La historia tiene criterios de aceptación verificables. | El documento fue revisado en la reunión de cierre y las referencias cruzadas están actualizadas. |
 
 Nuestra Definition of Done para esta etapa documental es:
 
@@ -385,9 +385,9 @@ Nuestra Definition of Done para esta etapa documental es:
 - [ ] Las referencias a IDs de requisitos, historias y casos de uso existen y son correctas.
 - [ ] Los enlaces internos funcionan.
 - [ ] Las tablas se ven bien renderizadas en GitHub.
-- [ ] El documento fue revisado por un integrante que no lo escribió.
-- [ ] El PR fue aprobado y mergeado a `main`.
-- [ ] Si el cambio afectó a otro documento, ese documento se actualizó en el mismo PR.
+- [ ] El documento fue revisado por un integrante que no lo escribió, en la reunión de cierre de la iteración.
+- [ ] El documento está subido a `main` y se ve correctamente renderizado en GitHub.
+- [ ] Si el cambio afectó a otro documento, ese documento se subió el mismo día.
 - [ ] La tabla de decisiones de `integrantes.md` está al día.
 
 ---
@@ -410,6 +410,7 @@ Nuestra Definition of Done para esta etapa documental es:
 | 1.0 | 05/2026 | Versión inicial. 20 criterios en cuatro bloques, aplicados a HU-01, HU-03 y HU-05. |
 | 1.1 | 05/2026 | Registro del cierre de las acciones correctivas de HU-03 y HU-05. Las evaluaciones originales se conservan sin modificar. |
 | 1.2 | 10/2026 | La checklist pasa de 20 criterios a 9. Se fusionan los que preguntaban lo mismo desde distintos ángulos y se incorpora C7, sobre requisitos no funcionales, que no existía. Cada criterio declara qué problema evita. Las tres evaluaciones de la sección 7 se reexpresan contra los criterios nuevos conservando todos los hallazgos originales. |
+| 1.3 | 10/2026 | Corrección de la autoevaluación y de la Definition of Done: declaraban un flujo de ramas y Pull Requests que el equipo no aplicó. Se reexpresan contra el flujo real registrado en la decisión D17. Ningún criterio de la DoR fue modificado. |
 
 ---
 
