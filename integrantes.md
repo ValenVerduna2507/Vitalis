@@ -15,7 +15,7 @@ Ciclo lectivo: 2026
 | Cantidad de integrantes | 4 |
 | Cliente del proyecto | Vitalis Centro de Entrenamiento — Pueblo Esther, Santa Fe |
 | Docente a cargo | Pedernera, Pablo |
-| Metodología de trabajo | Ágil, con iteraciones cortas y revisión por pares |
+| Metodología de trabajo | Ágil, con iteraciones cortas y revisión por pares en la reunión de cierre |
 | Organización del equipo | Horizontal, sin jefe de grupo. Las decisiones se toman por consenso. |
 | Repositorio | `vitalis-sistema-gestion` |
 | Rama principal | `main` |
@@ -71,15 +71,23 @@ En cada iteración un integrante distinto **modera** la reunión y lleva el regi
 
 ### Flujo de trabajo en el repositorio
 
-1. El integrante que redacta crea una rama a partir de `main` siguiendo la convención `docs/<tema>`, `diagram/<tema>` o `fix/<tema>`.
-2. Trabaja sobre esa rama con commits pequeños y descriptivos.
-3. Abre un Pull Request hacia `main` describiendo qué cambió y qué documentos se ven afectados.
-4. El revisor que le corresponde según la rotación lee el PR y deja sus comentarios.
-5. Si el cambio afecta a más de un documento, el PR requiere la aprobación de **dos** integrantes.
-6. Una vez aprobado, se hace merge y se elimina la rama.
-7. Ningún integrante hace push directo sobre `main`, incluido el autor del documento.
+El equipo trabaja **directamente sobre `main`**. Cada integrante sube sus archivos desde la interfaz web de GitHub, sin ramas intermedias y sin Pull Requests (decisión D17).
 
-El detalle de los comandos está en [`RECURSOS.md`](RECURSOS.md).
+**Por qué funciona en este proyecto.** Los artefactos están repartidos: la tabla de la sección 2 asigna a cada integrante sus documentos, de modo que dos personas rara vez editan el mismo archivo el mismo día. Además esto es documentación y no código: no hay compilación que romper ni pruebas que fallen, y una redacción incorrecta se detecta leyendo, no ejecutando.
+
+**Qué controla la calidad, entonces.** No es la revisión del Pull Request, porque no existe. Son tres cosas:
+
+| Control | Cuándo ocurre |
+|---|---|
+| Reparto por artefacto | Permanente. Cada documento tiene un autor y un revisor asignados en la sección 2. |
+| Revisión contra la Definition of Ready | En la reunión de cierre de cada iteración, sobre el trabajo ya subido. |
+| Acuerdo previo de las decisiones que cruzan documentos | Antes de escribir. Se toman en reunión y quedan registradas en la sección 6. |
+
+**Qué perdemos, dicho con todas las letras.** Un error llega a `main` sin ningún filtro previo. La revisión existe pero no deja rastro escrito en el repositorio: ocurre en la reunión, no en el historial, así que mirando los commits no se puede saber quién revisó qué. Y si dos integrantes editan el mismo archivo desde la web con pocos minutos de diferencia, el segundo pisa al primero sin aviso.
+
+**Lo que sí sostenemos.** Mensajes de commit descriptivos, que digan qué cambió y no "actualización". Un cambio por commit cuando es posible. Y si un cambio obliga a modificar otro documento, los dos se suben el mismo día, nunca uno hoy y el otro la semana que viene.
+
+> **Sobre la versión anterior de este apartado.** Hasta el 13/10/2026 esta sección describía un flujo de ramas y Pull Requests con revisión cruzada obligatoria. Ese flujo nunca se aplicó: el historial del repositorio muestra commits directos sobre `main` desde el primer día. El docente lo señaló en la devolución del 13/10 y el apartado se reescribió para que describa cómo se trabajó realmente. El flujo con ramas y Pull Requests sigue documentado en [`RECURSOS.md`](RECURSOS.md), ahora como material de referencia y no como el procedimiento vigente del equipo.
 
 ### Criterios de calidad acordados
 
@@ -87,7 +95,7 @@ El detalle de los comandos está en [`RECURSOS.md`](RECURSOS.md).
 - Toda historia de usuario debe indicar a qué requisitos responde.
 - Todo caso de uso debe indicar a qué historia y a qué requisitos corresponde.
 - Toda entidad del modelo debe justificarse por al menos un requisito.
-- Si un cambio en un documento obliga a modificar otro, ambos cambios viajan en el mismo Pull Request.
+- Si un cambio en un documento obliga a modificar otro, los dos se suben el mismo día y el mensaje de commit nombra los dos documentos.
 - Antes de cerrar una entrega se revisa la matriz de trazabilidad completa entre los cuatro integrantes.
 
 ---
@@ -96,9 +104,8 @@ El detalle de los comandos está en [`RECURSOS.md`](RECURSOS.md).
 
 | Canal | Uso |
 |---|---|
-| Grupo de mensajería del equipo | Coordinación diaria, dudas rápidas, avisos. |
-| Issues de GitHub | Registro de tareas pendientes, inconsistencias detectadas y decisiones a tomar. |
-| Pull Requests | Discusión sobre el contenido de cada documento. |
+| Grupo de mensajería del equipo | Coordinación diaria, dudas rápidas, avisos. Es también donde se anotan las tareas pendientes y las inconsistencias detectadas: el equipo no usa los Issues de GitHub. |
+| Historial de commits | Registro de qué cambió y cuándo. El mensaje de cada commit es la única traza escrita del cambio, de modo que se redacta pensando en quien lo lea después. |
 | Reuniones presenciales / videollamada | Planificación, revisión y retrospectiva. |
 | Consultas al docente | Dudas de metodología, alcance del trabajo y criterios de evaluación. |
 
@@ -126,10 +133,11 @@ Las decisiones que afectan a más de un documento se toman en reunión, por cons
 | D14 | 05/2026 | Para registrar como paciente nutricional a un alumno menor de 18 años, el sistema exige el tutor responsable y la fecha de autorización. Resuelve A5. | Las reglas RN05 y RN27 obligan a registrar un tutor responsable para los menores de 18 años, y el centro dicta dos disciplinas infantiles. Sin el tutor y la fecha de autorización, la consulta de un menor quedaría registrada sin respaldo. | `docs/requisitos.md`, `docs/er-modelo.md`, `docs/casos-de-uso.md`. |
 | D15 | 05/2026 | La arquitectura prevista es Web App, back-end y PostgreSQL, con **n8n** como motor de automatización e integración. n8n no contiene lógica de negocio ni reemplaza al back-end: ejecuta procesos periódicos y distribuye resultados. Ningún requisito funcional depende de él. | La restricción RE06 descarta las aplicaciones de escritorio y RE07 acota el presupuesto, lo que lleva a una solución web sobre tecnologías de código abierto. n8n cubre los procesos que se disparan por tiempo y no por acción de un usuario; mantener las reglas de negocio fuera de él las deja bajo control de versiones y dentro del alcance de las pruebas que exige RNF13. | `README.md`, `RECURSOS.md`, `docs/requisitos.md` (RE11), `docs/diseño-ui.md`. |
 | D16 | 10/2026 | La accesibilidad se incorpora al sistema como requisito verificable: se adopta WCAG 2.1 nivel AA sobre los criterios de contraste, color, escalado de texto, operación por teclado y tamaño de los objetivos táctiles. Se documenta en la sección 6 de `docs/diseño-ui.md` y se formaliza como **RNF14** en el apartado 7.6 de `docs/requisitos.md`. | El relevamiento no planteó la accesibilidad, pero las condiciones de uso relevadas la exigen: la recepcionista cobra de pie con las manos ocupadas, el instructor opera la tablet con una mano en el salón (restricción RE05), la dirección trabaja el listado de morosos impreso en blanco y negro, y el portal del alumno se abre desde el teléfono de un padrón que va de los chicos de Aeróbica Infantil a los adultos mayores de Pilates. Dejarla solo como criterio de diseño la mantenía fuera de toda verificación; escrita como requisito, se verifica igual que el resto. | `docs/requisitos.md` (RNF14, RE02), `docs/diseño-ui.md`, `DoR.md` (criterio C7). |
+| D17 | 10/2026 | El equipo trabaja directamente sobre `main`, sin ramas ni Pull Requests. La calidad se controla con el reparto por artefacto, la revisión contra la Definition of Ready en la reunión de cierre y el acuerdo previo de toda decisión que cruce documentos. | El apartado 4 declaraba un flujo de ramas y Pull Requests que el equipo nunca aplicó, y el historial del repositorio lo desmiente desde el primer commit. Ante la alternativa de adoptar el flujo declarado o declarar el flujo real, el equipo eligió lo segundo: un procedimiento que el repositorio contradice no es un procedimiento, es una intención. Queda registrado también qué se pierde al trabajar así, para que la elección sea explícita y no por omisión. | `integrantes.md` (apartados 1, 4 y 5), `README.md` (apartados 11 y 12), `RECURSOS.md`, `DoR.md` (autoevaluación). |
 
 Las alternativas de modelado que se evaluaron y se descartaron están documentadas en [`docs/er-modelo.md`](docs/er-modelo.md), sección 6.3.
 
-Toda decisión nueva se agrega a esta tabla mediante un Pull Request que también actualice los documentos afectados.
+Toda decisión nueva se agrega a esta tabla en la misma tanda de cambios que actualiza los documentos afectados, y el mensaje de commit la nombra por su identificador.
 
 ---
 
